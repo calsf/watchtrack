@@ -2,21 +2,71 @@
 <layout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".AddShowFragment">
 
-
-        <EditText
-            android:id="@+id/editTextNumber"
+        <LinearLayout
+            android:id="@+id/time_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.example.watchtrack.EditTextTime
+                android:id="@+id/hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:cursorVisible="false"
+                android:ems="2"
+                android:inputType="number"
+                android:maxLength="3"
+                android:text="@string/default_time"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/colon1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/colon" />
+
+            <com.example.watchtrack.EditTextTime
+                android:id="@+id/minutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:cursorVisible="false"
+                android:ems="2"
+                android:inputType="number"
+                android:maxLength="3"
+                android:text="@string/default_time"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/colon2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/colon" />
+
+            <com.example.watchtrack.EditTextTime
+                android:id="@+id/seconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:ems="2"
+                android:inputType="number"
+                android:maxLength="3"
+                android:text="@string/default_time"
+                android:textAlignment="center" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

@@ -17,9 +17,6 @@ class MoviesFragment : Fragment() {
         val binding: MoviesFragmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.movies_fragment, container, false)
 
-        // TEMP - navigate to addMovieFragment
-        binding.addMovieButton.setOnClickListener{ Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addMovieFragment)}
-
         return binding.root
     }
 }

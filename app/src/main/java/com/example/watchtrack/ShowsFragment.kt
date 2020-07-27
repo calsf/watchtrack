@@ -18,9 +18,6 @@ class ShowsFragment : Fragment() {
         val binding: ShowsFragmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.shows_fragment, container, false)
 
-        // TEMP - navigate to addShowFragment
-        binding.addShowButton.setOnClickListener{ Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addShowFragment)}
-
         return binding.root
     }
 }
