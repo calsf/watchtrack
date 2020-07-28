@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.watchtrack.databinding.ActivityMainBinding
@@ -18,9 +20,12 @@ import com.example.watchtrack.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var inputMethodManager: InputMethodManager
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         // Init inputMethodManager
         inputMethodManager =
@@ -32,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
 
         // Setup action bar with navigation
-        val navController = this.findNavController(R.id.nav_host_fragment)
+        navController = this.findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
@@ -45,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         // Hide input
         inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
 
-        val navController = this.findNavController(R.id.nav_host_fragment)
         return NavigationUI.navigateUp(navController, drawerLayout)
     }
 
@@ -68,5 +72,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.dispatchTouchEvent(event)
     }
+
 }
 

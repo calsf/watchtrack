@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
 import androidx.viewpager2.widget.ViewPager2
 import com.example.watchtrack.databinding.HomeFragmentBinding
 import com.google.android.material.tabs.TabLayoutMediator

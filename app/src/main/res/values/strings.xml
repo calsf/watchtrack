@@ -4,8 +4,11 @@
     <string name="movies_tab">Movies</string>
     <string name="colon"> : </string>
     <string name="default_time">00</string>
-    <string name="season_text">"Season "</string>
-    <string name="episode_number__text">"Episode Num "</string>
-    <string name="episode_time_text">"Episode Time "</string>
-    <string name="title_hint">Title</string>
+    <string name="season_text">"SEASON"</string>
+    <string name="episode_number_text">"EPISODE"</string>
+    <string name="episode_time_text">"EPISODE TIME"</string>
+    <string name="title">TITLE</string>
+    <string name="hours_label">HOURS</string>
+    <string name="minutes_label">MINUTES</string>
+    <string name="seconds_label">SECONDS</string>
 </resources>
