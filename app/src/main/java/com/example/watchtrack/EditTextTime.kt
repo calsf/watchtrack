@@ -2,6 +2,7 @@ package com.example.watchtrack
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -10,8 +11,9 @@ import android.view.ContextMenu
 // Custom EditText for time input
 class EditTextTime
     : androidx.appcompat.widget.AppCompatEditText {
-    // Set up addTextChangedListener to insert values from right to left with a max of 2 characters
+
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        // Set up addTextChangedListener to insert values from right to left with a max of 2 characters
         addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 s?.let {
@@ -34,7 +36,18 @@ class EditTextTime
                 return
             }
         })
+
+        // Set up onFocusChangeListener to change text color on focused
+        setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                setTextColor(Color.GREEN)
+            }
+            else {
+                setTextColor(Color.BLACK)
+            }
+        }
     }
+
 
     // Always set cursor position to the end of the text
     override fun onSelectionChanged(start: Int, end: Int) {

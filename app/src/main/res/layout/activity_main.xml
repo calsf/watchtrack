@@ -1,13 +1,30 @@
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <fragment
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation" />
+        >
 
-</merge>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <fragment
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/navigation" />
+        </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

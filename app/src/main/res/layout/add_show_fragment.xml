@@ -8,15 +8,43 @@
         android:layout_height="match_parent"
         tools:context=".AddShowFragment">
 
+        <EditText
+            android:id="@+id/show_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="88dp"
+            android:ems="12"
+            android:hint="@string/title_hint"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/episode_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/episode_time_text"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/episode_number" />
+
         <LinearLayout
             android:id="@+id/time_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/episode_time_text">
 
             <com.example.watchtrack.EditTextTime
                 android:id="@+id/hours"
@@ -28,13 +56,15 @@
                 android:inputType="number"
                 android:maxLength="3"
                 android:text="@string/default_time"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/colon1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/colon" />
+                android:text="@string/colon"
+                android:textSize="30sp" />
 
             <com.example.watchtrack.EditTextTime
                 android:id="@+id/minutes"
@@ -46,13 +76,15 @@
                 android:inputType="number"
                 android:maxLength="3"
                 android:text="@string/default_time"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/colon2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/colon" />
+                android:text="@string/colon"
+                android:textSize="30sp" />
 
             <com.example.watchtrack.EditTextTime
                 android:id="@+id/seconds"
@@ -63,8 +95,63 @@
                 android:inputType="number"
                 android:maxLength="3"
                 android:text="@string/default_time"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="30sp" />
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/season_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:ems="2"
+            android:inputType="number"
+            android:maxLength="3"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="223dp" />
+
+        <TextView
+            android:id="@+id/episode_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/episode_number__text"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/episode_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/episode_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:ems="2"
+            android:inputType="number"
+            android:maxLength="3"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="320dp" />
+
+        <TextView
+            android:id="@+id/season_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/season_text"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/season_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_title_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

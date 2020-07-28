@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.watchtrack.HomeFragment"
-        android:label="home_fragment"
-        tools:layout="@layout/home_fragment" >
+        android:label="WatchTrack"
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_addShowFragment"
             app:destination="@id/addShowFragment" />
@@ -19,11 +19,15 @@
     <fragment
         android:id="@+id/addShowFragment"
         android:name="com.example.watchtrack.AddShowFragment"
-        android:label="add_show_fragment"
-        tools:layout="@layout/add_show_fragment" />
+        android:label="Adding Show"
+        tools:layout="@layout/add_show_fragment">
+        <action
+            android:id="@+id/action_addShowFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addMovieFragment"
         android:name="com.example.watchtrack.AddMovieFragment"
-        android:label="add_movie_fragment"
+        android:label="Adding Movie"
         tools:layout="@layout/add_movie_fragment" />
 </navigation>
