@@ -7,10 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
-        tools:context=".AddShowFragment">
+        tools:context=".shows.AddShowFragment">
 
         <TextView
-            android:id="@+id/title_text"
+            android:id="@+id/title_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -33,12 +33,14 @@
             android:textAlignment="viewStart"
             android:textColor="@color/defaultText"
             android:textSize="18sp"
+            android:maxLength="50"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_text" />
+            app:layout_constraintTop_toBottomOf="@+id/title_label"
+            android:importantForAutofill="no" />
 
         <TextView
-            android:id="@+id/season_text"
+            android:id="@+id/season_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -46,12 +48,12 @@
             android:text="@string/season_text"
             android:textColor="@color/editField"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/episode_text"
+            app:layout_constraintEnd_toStartOf="@+id/episode_num_label"
             app:layout_constraintHorizontal_bias=".5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_input" />
 
-        <EditText
+        <com.example.watchtrack.EditTextSetEnd
             android:id="@+id/season_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -65,12 +67,12 @@
             android:textAlignment="center"
             android:textColor="@color/defaultText"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/season_text"
-            app:layout_constraintStart_toStartOf="@+id/season_text"
-            app:layout_constraintTop_toBottomOf="@+id/season_text" />
+            app:layout_constraintEnd_toEndOf="@+id/season_label"
+            app:layout_constraintStart_toStartOf="@+id/season_label"
+            app:layout_constraintTop_toBottomOf="@+id/season_label" />
 
         <TextView
-            android:id="@+id/episode_text"
+            android:id="@+id/episode_num_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -80,10 +82,10 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".5"
-            app:layout_constraintStart_toEndOf="@+id/season_text"
+            app:layout_constraintStart_toEndOf="@+id/season_label"
             app:layout_constraintTop_toBottomOf="@+id/title_input" />
 
-        <EditText
+        <com.example.watchtrack.EditTextSetEnd
             android:id="@+id/episode_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -98,9 +100,9 @@
             android:textAlignment="center"
             android:textColor="@color/defaultText"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/episode_text"
-            app:layout_constraintStart_toStartOf="@+id/episode_text"
-            app:layout_constraintTop_toBottomOf="@+id/episode_text" />
+            app:layout_constraintEnd_toEndOf="@+id/episode_num_label"
+            app:layout_constraintStart_toStartOf="@+id/episode_num_label"
+            app:layout_constraintTop_toBottomOf="@+id/episode_num_label" />
 
         <com.example.watchtrack.EditTextTime
             android:id="@+id/hours"
@@ -122,7 +124,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/episode_time_text" />
+            app:layout_constraintTop_toTopOf="@+id/episode_time_label" />
 
         <TextView
             android:id="@+id/colon1"
@@ -135,7 +137,7 @@
             app:layout_constraintEnd_toStartOf="@+id/minutes"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/hours"
-            app:layout_constraintTop_toBottomOf="@+id/episode_time_text" />
+            app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
 
         <com.example.watchtrack.EditTextTime
             android:id="@+id/minutes"
@@ -155,7 +157,7 @@
             app:layout_constraintEnd_toStartOf="@+id/colon2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/colon1"
-            app:layout_constraintTop_toBottomOf="@+id/episode_time_text" />
+            app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
 
         <TextView
             android:id="@+id/colon2"
@@ -168,7 +170,7 @@
             app:layout_constraintEnd_toStartOf="@+id/seconds"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/minutes"
-            app:layout_constraintTop_toBottomOf="@+id/episode_time_text" />
+            app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
 
         <com.example.watchtrack.EditTextTime
             android:id="@+id/seconds"
@@ -188,11 +190,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/colon2"
-            app:layout_constraintTop_toBottomOf="@+id/episode_time_text" />
+            app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
 
 
         <TextView
-            android:id="@+id/episode_time_text"
+            android:id="@+id/episode_time_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -211,7 +213,7 @@
             android:fontFamily="@font/roboto"
             android:text="@string/hours_label"
             android:textColor="@color/editField"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/colon1"
             app:layout_constraintStart_toStartOf="@+id/hours"
             app:layout_constraintTop_toBottomOf="@+id/hours" />
@@ -223,7 +225,7 @@
             android:fontFamily="@font/roboto"
             android:text="@string/minutes_label"
             android:textColor="@color/editField"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/minutes"
             app:layout_constraintStart_toEndOf="@+id/colon1"
             app:layout_constraintTop_toBottomOf="@+id/minutes" />
@@ -235,10 +237,25 @@
             android:fontFamily="@font/roboto"
             android:text="@string/seconds_label"
             android:textColor="@color/editField"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/seconds"
             app:layout_constraintStart_toEndOf="@+id/colon2"
             app:layout_constraintTop_toBottomOf="@+id/seconds" />
+
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/add_show_btn"
+            android:textColor="@color/design_default_color_background"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/minutes_label"
+            app:layout_constraintVertical_bias=".2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

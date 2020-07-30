@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         return NavigationUI.navigateUp(navController, drawerLayout)
     }
 
-    // Clear focus and hide input if tapping outside of a focused EditText
+    // Hide input if tapping outside of a focused EditText, does not clear focus
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_UP) {
             val view: View? = currentFocus
@@ -65,7 +65,11 @@ class MainActivity : AppCompatActivity() {
                 view.getGlobalVisibleRect(outRect)
 
                 if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-                    view.clearFocus()
+                    // If it is a EditTextTime, reset color
+                    if (view is EditTextTime)
+                    {
+                        view.resetTextColor()
+                    }
                     inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
                 }
             }

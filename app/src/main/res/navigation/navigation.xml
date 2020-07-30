@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/addShowFragment"
-        android:name="com.example.watchtrack.AddShowFragment"
+        android:name="com.example.watchtrack.shows.AddShowFragment"
         android:label="Adding Show"
         tools:layout="@layout/add_show_fragment">
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/addMovieFragment"
-        android:name="com.example.watchtrack.AddMovieFragment"
+        android:name="com.example.watchtrack.movies.AddMovieFragment"
         android:label="Adding Movie"
         tools:layout="@layout/add_movie_fragment" />
 </navigation>

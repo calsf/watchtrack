@@ -11,4 +11,5 @@
     <string name="hours_label">HOURS</string>
     <string name="minutes_label">MINUTES</string>
     <string name="seconds_label">SECONDS</string>
+    <string name="add_show_btn">ADD SHOW</string>
 </resources>

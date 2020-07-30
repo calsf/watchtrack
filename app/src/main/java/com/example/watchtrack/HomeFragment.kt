@@ -1,15 +1,18 @@
 package com.example.watchtrack
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
+import com.example.watchtrack.database.WatchDatabase
 import com.example.watchtrack.databinding.HomeFragmentBinding
+import com.example.watchtrack.movies.MoviesFragment
+import com.example.watchtrack.shows.ShowsFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 

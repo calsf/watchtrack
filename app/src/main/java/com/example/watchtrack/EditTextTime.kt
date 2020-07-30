@@ -31,7 +31,7 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
             if (hasFocus) {
                 setTextColor(focusedTextColor)
             } else {
-                setTextColor(defaultTextColor)
+                resetTextColor()
             }
         }
 
@@ -46,7 +46,7 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
                     (event?.action == KeyEvent.ACTION_DOWN &&
                             event?.keyCode == KeyEvent.KEYCODE_ENTER)
                 ) {
-                    setTextColor(defaultTextColor)
+                    resetTextColor()
                     return false
                 }
                 return false
@@ -139,7 +139,7 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
         * */
     override fun onKeyPreIme(keyCode: Int, event: KeyEvent): Boolean {
         if (event.keyCode == KeyEvent.KEYCODE_BACK) {
-            setTextColor(defaultTextColor)
+            resetTextColor()
         } else super.dispatchKeyEvent(event)
         return false
     }
@@ -177,6 +177,12 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
         } catch (nfe: NumberFormatException) {
             minutes.setText("00")
         }
+    }
+
+    // Reset text color to default
+    fun resetTextColor()
+    {
+        setTextColor(defaultTextColor)
     }
 
 }
