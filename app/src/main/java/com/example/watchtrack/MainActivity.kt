@@ -31,10 +31,11 @@ class MainActivity : AppCompatActivity() {
         inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        // Get reference to the binding object
+        // Get reference to the binding object, lock drawer
         val binding =
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         drawerLayout = binding.drawerLayout
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         // Setup action bar with navigation
         navController = this.findNavController(R.id.nav_host_fragment)

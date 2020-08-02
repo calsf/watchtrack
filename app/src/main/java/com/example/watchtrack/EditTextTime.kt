@@ -9,6 +9,8 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 
 const val TIME_UNIT = 60
 const val MAX_TIME = 99
@@ -18,9 +20,10 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
     private var defaultTextColor: Int
     private var focusedTextColor: Int
 
-    private lateinit var hours: EditTextTime
-    private lateinit var minutes: EditTextTime
-    private lateinit var seconds: EditTextTime
+    // Initialize in the associated fragment.kt file in onCreateView
+    lateinit var hours: EditTextTime
+    lateinit var minutes: EditTextTime
+    lateinit var seconds: EditTextTime
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         defaultTextColor = ContextCompat.getColor(context, R.color.defaultText)
@@ -54,12 +57,8 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
         })
     }
 
+    // Hours, minutes, seconds should be initialized before this call in a fragment's onCreateView
     override fun onAttachedToWindow() {
-        // Find and set the EditTextTimes for hours, minutes, and seconds
-        hours = rootView.findViewById(R.id.hours)
-        minutes = rootView.findViewById(R.id.minutes)
-        seconds = rootView.findViewById(R.id.seconds)
-
         // Set up addTextChangedListener for this EditTextTime
         addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

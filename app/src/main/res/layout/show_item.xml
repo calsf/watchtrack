@@ -11,43 +11,44 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <TextView
             android:id="@+id/show_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto"
+            android:paddingStart="8dp"
             android:textColor="@color/defaultText"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
             tools:text="Breaking Bad" />
 
         <TextView
             android:id="@+id/season_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:paddingStart="8dp"
             android:text="@string/season_text"
+            android:textColor="@color/defaultText"
             app:layout_constraintEnd_toStartOf="@+id/season_num"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/show_title"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/show_title"
+            app:layout_constraintTop_toBottomOf="@+id/show_title" />
 
         <TextView
             android:id="@+id/season_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLength="3"
+            android:paddingStart="8dp"
+            android:textColor="@color/defaultText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/season_label"
@@ -58,12 +59,13 @@
             android:id="@+id/episode_num_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:paddingStart="8dp"
             android:text="@string/episode_number_text"
+            android:textColor="@color/defaultText"
             app:layout_constraintEnd_toStartOf="@+id/episode_num"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/show_title"
+            app:layout_constraintStart_toStartOf="@+id/show_title"
             app:layout_constraintTop_toBottomOf="@+id/season_label" />
 
         <TextView
@@ -71,6 +73,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLength="3"
+            android:paddingStart="8dp"
+            android:textColor="@color/defaultText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/episode_num_label"
@@ -78,23 +82,10 @@
             tools:text="222" />
 
         <TextView
-            android:id="@+id/episode_time_label"
+            android:id="@+id/hours_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="@string/episode_time_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/hours"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/show_title"
-            app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
-            app:layout_constraintVertical_bias="0" />
-
-        <TextView
-            android:id="@+id/hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:ems="2"
             android:fontFamily="@font/roboto"
@@ -103,28 +94,35 @@
             android:textAlignment="center"
             android:textColor="@color/defaultText"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/colon1"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/episode_time_label"
-            app:layout_constraintTop_toTopOf="@+id/episode_time_label" />
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/show_title"
+            app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
             android:id="@+id/colon1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto"
             android:text="@string/colon"
             android:textColor="@color/editField"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/minutes"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/hours"
-            app:layout_constraintTop_toTopOf="@+id/episode_time_label" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/minutes_display"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@+id/hours_display"
+            app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/minutes"
+            android:id="@+id/minutes_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:ems="2"
             android:fontFamily="@font/roboto"
@@ -133,28 +131,34 @@
             android:textAlignment="center"
             android:textColor="@color/defaultText"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/colon2"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/colon1"
-            app:layout_constraintTop_toTopOf="@+id/episode_time_label" />
+            app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
             android:id="@+id/colon2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto"
             android:text="@string/colon"
             android:textColor="@color/editField"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/seconds"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/minutes"
-            app:layout_constraintTop_toTopOf="@+id/episode_time_label" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/seconds_display"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@+id/minutes_display"
+            app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/seconds"
+            android:id="@+id/seconds_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:ems="2"
             android:fontFamily="@font/roboto"
@@ -163,10 +167,25 @@
             android:textAlignment="center"
             android:textColor="@color/defaultText"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/colon2"
-            app:layout_constraintTop_toTopOf="@+id/episode_time_label" />
+            app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+            app:layout_constraintVertical_bias="0" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/minutes_display"
+            app:layout_constraintVertical_bias="1" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

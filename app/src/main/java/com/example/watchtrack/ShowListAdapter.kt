@@ -27,9 +27,9 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
             binding.showTitle.text = item.title
             binding.seasonNum.text = item.season.toString()
             binding.episodeNum.text = item.episode.toString()
-            binding.hours.text = item.hours.toString().padStart(2, '0')
-            binding.minutes.text = item.minutes.toString().padStart(2, '0')
-            binding.seconds.text = item.seconds.toString().padStart(2, '0')
+            binding.hoursDisplay.text = item.hours.toString().padStart(2, '0')
+            binding.minutesDisplay.text = item.minutes.toString().padStart(2, '0')
+            binding.secondsDisplay.text = item.seconds.toString().padStart(2, '0')
 
             // Update data binding "show" variable in show_item
             binding.show = item

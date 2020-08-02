@@ -28,7 +28,7 @@ interface ShowDatabaseDao
 
     // Return the first element of list where showId is in descending order
     @Query ("SELECT * FROM show_table ORDER BY showId DESC LIMIT 1")
-    fun getTonight(): Show?
+    fun getShow(): Show?
 
     // Return all columns from the table in descending order
     @Query ("SELECT * FROM show_table ORDER BY showId DESC")

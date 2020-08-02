@@ -43,13 +43,17 @@ class ShowViewModel (
     }
 
     // For onClick, add new show with given data
-    fun onAdd(title: String) {
+    fun onAdd(title: String, season: Int, episode: Int, hours: Int, minutes: Int, seconds: Int) {
+        val newShow = Show()
         uiScope.launch {
             // Create new show and insert into database
-            val newShow = Show()
             newShow.title = title
+            newShow.season = season
+            newShow.episode = episode
+            newShow.hours = hours
+            newShow.minutes = minutes
+            newShow.seconds = seconds
             insert(newShow)
-
         }
     }
 

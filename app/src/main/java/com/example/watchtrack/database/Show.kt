@@ -13,17 +13,17 @@ data class Show (
     var title: String = "Title",
 
     @ColumnInfo(name = "hours")
-    var hours: Long = 0,
+    var hours: Int = 0,
 
     @ColumnInfo(name = "minutes")
-    var minutes: Long = 0,
+    var minutes: Int = 0,
 
     @ColumnInfo(name = "seconds")
-    var seconds: Long = 0,
+    var seconds: Int = 0,
 
     @ColumnInfo(name = "season")
-    var season: Long = -1,
+    var season: Int = -1,
 
     @ColumnInfo(name = "episode")
-    var episode: Long = -1
+    var episode: Int = -1
 )

@@ -4,6 +4,7 @@
     <string name="movies_tab">Movies</string>
     <string name="colon"> : </string>
     <string name="default_time">00</string>
+    <string name="default_num">1</string>
     <string name="season_text">"SEASON"</string>
     <string name="episode_number_text">"EPISODE"</string>
     <string name="episode_time_text">"EPISODE TIME"</string>
@@ -12,4 +13,6 @@
     <string name="minutes_label">MINUTES</string>
     <string name="seconds_label">SECONDS</string>
     <string name="add_show_btn">ADD SHOW</string>
+    <string name="fail_to_add_show">Could not add show.</string>
+    <string name="success_add_show">Show successfully added.</string>
 </resources>
