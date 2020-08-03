@@ -1,13 +1,13 @@
 package com.example.watchtrack
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.viewpager2.widget.ViewPager2
 import com.example.watchtrack.database.WatchDatabase
 import com.example.watchtrack.databinding.HomeFragmentBinding
@@ -77,7 +77,6 @@ class HomeFragment : Fragment() {
                 binding.addMovieButton.visibility = View.GONE
                 binding.addShowButton.visibility = View.GONE
             }
-
         }
     }
 }

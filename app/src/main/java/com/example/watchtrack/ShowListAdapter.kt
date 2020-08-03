@@ -1,6 +1,9 @@
 package com.example.watchtrack
 
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -42,6 +45,25 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding =
                     ShowItemBinding.inflate(layoutInflater, parent, false)
+
+                // Set onClick listener to expand and collapse view for show item
+                binding.expandCollapseBtn.setOnClickListener(){
+                    if (binding.expandableView.visibility == View.GONE)
+                    {
+                        binding.expandableView.visibility = View.VISIBLE
+                        binding.line.visibility = View.GONE
+                        binding.expandedLine.visibility = View.VISIBLE
+                        it.setBackgroundResource(R.drawable.arrow_up);
+                    }
+                    else
+                    {
+                        binding.expandableView.visibility = View.GONE
+                        binding.line.visibility = View.VISIBLE
+                        binding.expandedLine.visibility = View.GONE
+                        it.setBackgroundResource(R.drawable.arrow_down);
+                    }
+                }
+
                 return ViewHolder(binding)
             }
         }
