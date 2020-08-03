@@ -39,6 +39,7 @@
                     android:paddingStart="8dp"
                     android:textColor="@color/defaultText"
                     android:textSize="24sp"
+                    app:title="@{show}"
                     app:layout_constraintEnd_toEndOf="@+id/expand_collapse_btn"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +66,7 @@
                     android:maxLength="3"
                     android:paddingStart="8dp"
                     android:textColor="@color/defaultText"
+                    app:season="@{show}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/season_label"
@@ -90,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:maxLength="3"
                     android:paddingStart="8dp"
+                    app:episode="@{show}"
                     android:textColor="@color/defaultText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
@@ -110,6 +113,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/defaultText"
                     android:textSize="14sp"
+                    app:hours="@{show}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/colon1"
                     app:layout_constraintHorizontal_bias="0"
@@ -147,6 +151,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/defaultText"
                     android:textSize="14sp"
+                    app:minutes="@{show}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/colon2"
                     app:layout_constraintHorizontal_bias="0"
@@ -183,6 +188,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/defaultText"
                     android:textSize="14sp"
+                    app:seconds="@{show}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
@@ -222,7 +228,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/season_text"
                         android:textColor="@color/editField"
@@ -230,10 +235,10 @@
                         app:layout_constraintEnd_toStartOf="@+id/expanded_episode_num_label"
                         app:layout_constraintHorizontal_bias=".5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_input" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.example.watchtrack.EditTextSetEnd
-                        android:id="@+id/season_number"
+                        android:id="@+id/expand_season_number"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -247,7 +252,7 @@
                         android:textAlignment="center"
                         android:textColor="@color/defaultText"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/hours"
                         app:layout_constraintEnd_toEndOf="@+id/expanded_season_label"
                         app:layout_constraintStart_toStartOf="@+id/expanded_season_label"
                         app:layout_constraintTop_toBottomOf="@+id/expanded_season_label" />
@@ -256,18 +261,18 @@
                         android:id="@+id/expanded_episode_num_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/episode_number_text"
                         android:textColor="@color/editField"
                         android:textSize="12sp"
-                        app:layout_constraintEnd_toStartOf="@+id/hours"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias=".5"
                         app:layout_constraintStart_toEndOf="@+id/expanded_season_label"
-                        app:layout_constraintTop_toBottomOf="@+id/title_input" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.example.watchtrack.EditTextSetEnd
-                        android:id="@+id/episode_number"
+                        android:id="@+id/expand_episode_number"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -282,16 +287,18 @@
                         android:textAlignment="center"
                         android:textColor="@color/defaultText"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/season_number"
+                        app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
                         app:layout_constraintEnd_toEndOf="@+id/expanded_episode_num_label"
                         app:layout_constraintStart_toStartOf="@+id/expanded_episode_num_label"
                         app:layout_constraintTop_toBottomOf="@+id/expanded_episode_num_label" />
 
+                    <!-- TIME INPUT -->
                     <com.example.watchtrack.EditTextTime
                         android:id="@+id/hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
                         android:background="@android:color/transparent"
                         android:cursorVisible="false"
                         android:ems="2"
@@ -302,32 +309,34 @@
                         android:text="@string/default_time"
                         android:textAlignment="center"
                         android:textColor="@color/defaultText"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         app:layout_constraintBottom_toTopOf="@+id/hours_label"
                         app:layout_constraintEnd_toStartOf="@+id/expand_colon1"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toEndOf="@+id/episode_number"
-                        app:layout_constraintTop_toTopOf="@+id/episode_time_label" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
 
                     <TextView
                         android:id="@+id/expand_colon1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/colon"
                         android:textColor="@color/editField"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         app:layout_constraintBottom_toBottomOf="@+id/hours"
                         app:layout_constraintEnd_toStartOf="@+id/minutes"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/hours"
-                        app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
+                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
 
                     <com.example.watchtrack.EditTextTime
                         android:id="@+id/minutes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:background="@android:color/transparent"
                         android:cursorVisible="false"
                         android:ems="2"
@@ -338,31 +347,33 @@
                         android:text="@string/default_time"
                         android:textAlignment="center"
                         android:textColor="@color/defaultText"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         app:layout_constraintBottom_toTopOf="@+id/minutes_label"
                         app:layout_constraintEnd_toStartOf="@+id/expand_colon2"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon1"
-                        app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
+                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
 
                     <TextView
                         android:id="@+id/expand_colon2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/colon"
                         android:textColor="@color/editField"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         app:layout_constraintBottom_toBottomOf="@+id/seconds"
                         app:layout_constraintEnd_toStartOf="@+id/seconds"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/minutes"
-                        app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
+                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
 
                     <com.example.watchtrack.EditTextTime
                         android:id="@+id/seconds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@android:color/transparent"
                         android:cursorVisible="false"
@@ -374,22 +385,23 @@
                         android:text="@string/default_time"
                         android:textAlignment="center"
                         android:textColor="@color/defaultText"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         app:layout_constraintBottom_toTopOf="@+id/seconds_label"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon2"
-                        app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
+                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
 
                     <TextView
                         android:id="@+id/hours_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/hours_label"
                         android:textColor="@color/editField"
-                        android:textSize="8sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toTopOf="@+id/update_btn"
                         app:layout_constraintEnd_toStartOf="@+id/expand_colon1"
                         app:layout_constraintStart_toStartOf="@+id/hours" />
 
@@ -397,11 +409,12 @@
                         android:id="@+id/minutes_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/minutes_label"
                         android:textColor="@color/editField"
-                        android:textSize="8sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toTopOf="@+id/update_btn"
                         app:layout_constraintEnd_toEndOf="@+id/minutes"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon1" />
 
@@ -409,13 +422,43 @@
                         android:id="@+id/seconds_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/seconds_label"
                         android:textColor="@color/editField"
-                        android:textSize="8sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toTopOf="@+id/update_btn"
                         app:layout_constraintEnd_toEndOf="@+id/seconds"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon2" />
+
+                    <Button
+                        android:id="@+id/add_season_btn"
+                        android:layout_width="48dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
+                        app:layout_constraintStart_toEndOf="@+id/expand_season_number"
+                        app:layout_constraintTop_toTopOf="@+id/expand_season_number" />
+
+                    <Button
+                        android:id="@+id/subtract_season_btn"
+                        android:layout_width="48dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/arrow_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
+                        app:layout_constraintEnd_toStartOf="@+id/expand_season_number"
+                        app:layout_constraintTop_toTopOf="@+id/expand_season_number" />
+
+                    <Button
+                        android:id="@+id/update_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/update_btn"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

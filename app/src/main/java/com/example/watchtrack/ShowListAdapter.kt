@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.watchtrack.database.Show
 import com.example.watchtrack.databinding.ShowItemBinding
+import java.lang.NumberFormatException
+
+const val MAX_NUM_INPUT = 1000
 
 // ListAdapter will use ShowDiffCallback to determine what Shows have changed with ViewHolder
 class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCallback()) {
@@ -26,16 +29,45 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
         (val binding: ShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Show) {
-            // Display item data
-            binding.showTitle.text = item.title
-            binding.seasonNum.text = item.season.toString()
-            binding.episodeNum.text = item.episode.toString()
-            binding.hoursDisplay.text = item.hours.toString().padStart(2, '0')
-            binding.minutesDisplay.text = item.minutes.toString().padStart(2, '0')
-            binding.secondsDisplay.text = item.seconds.toString().padStart(2, '0')
-
             // Update data binding "show" variable in show_item
             binding.show = item
+
+            // Set onClick listener to add 1 to season input
+            binding.addSeasonBtn.setOnClickListener {
+                try {
+                    // Make sure adding 1 will not go over num limit for input
+                    var currSeason = binding.expandSeasonNumber.text.toString().toInt()
+                    if (currSeason + 1 < MAX_NUM_INPUT) {
+                        binding.expandSeasonNumber.setText((currSeason + 1).toString())
+                    }
+                }
+                catch (nfe: NumberFormatException)
+                {
+                    binding.expandSeasonNumber.setText("1")
+                }
+            }
+
+            // Set onClick listener to subtract 1 from season input
+            binding.subtractSeasonBtn.setOnClickListener {
+                try {
+                    // Make sure subtracting 1 does not go into negatives
+                    var currSeason = binding.expandSeasonNumber.text.toString().toInt()
+                    if (currSeason - 1 >= 0) {
+                        binding.expandSeasonNumber.setText((currSeason - 1).toString())
+                    }
+                }
+                catch (nfe: NumberFormatException)
+                {
+                    binding.expandSeasonNumber.setText("1")
+                }
+            }
+
+            // Update show item with inputs in the expanded view
+            binding.updateBtn.setOnClickListener {
+                item.season = binding.expandSeasonNumber.text.toString().toInt()
+                binding.show = item
+            }
+
             // Execute any pending bindings
             binding.executePendingBindings()
         }
