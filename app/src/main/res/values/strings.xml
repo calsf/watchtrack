@@ -15,5 +15,7 @@
     <string name="add_show_btn">ADD SHOW</string>
     <string name="fail_to_add_show">Could not add show.</string>
     <string name="success_add_show">Show successfully added.</string>
+    <string name="fail_to_update_show">Could not update show.</string>
+    <string name="success_update_show">Show successfully updated.</string>
     <string name="update_btn">Update</string>
 </resources>

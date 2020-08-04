@@ -3,6 +3,9 @@ package com.example.watchtrack
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.watchtrack.database.Show
+/*
+Bind and display Show values in show_item.xml text views
+ */
 
 @BindingAdapter("title")
 fun TextView.setTitle(item: Show?) {

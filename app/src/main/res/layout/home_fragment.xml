@@ -54,7 +54,7 @@
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/add_light" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_movie_button"
@@ -68,7 +68,7 @@
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/add_light" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

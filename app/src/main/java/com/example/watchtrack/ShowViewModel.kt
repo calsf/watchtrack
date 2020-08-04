@@ -57,6 +57,17 @@ class ShowViewModel (
         }
     }
 
+    // Update show in ShowsFragment when update status is true
+    fun updateShow(show: Show)
+    {
+        // Cancel all coroutines before updating
+        viewModelJob.cancel()
+
+        uiScope.launch {
+            update(show)
+        }
+    }
+
     // For onClick, clear table
     fun onClear() {
         uiScope.launch {

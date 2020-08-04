@@ -208,6 +208,7 @@
                     app:layout_constraintStart_toEndOf="@+id/show_title"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <!-- EXPANDLE VIEW FOR EDITING THIS SHOW ITEM -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/expandable_view"
                     android:layout_width="match_parent"
@@ -228,6 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:layout_marginEnd="32dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/season_text"
                         android:textColor="@color/editField"
@@ -261,6 +263,7 @@
                         android:id="@+id/expanded_episode_num_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/roboto"
                         android:text="@string/episode_number_text"
@@ -400,7 +403,7 @@
                         android:fontFamily="@font/roboto"
                         android:text="@string/hours_label"
                         android:textColor="@color/editField"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         app:layout_constraintBottom_toTopOf="@+id/update_btn"
                         app:layout_constraintEnd_toStartOf="@+id/expand_colon1"
                         app:layout_constraintStart_toStartOf="@+id/hours" />
@@ -413,7 +416,7 @@
                         android:fontFamily="@font/roboto"
                         android:text="@string/minutes_label"
                         android:textColor="@color/editField"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         app:layout_constraintBottom_toTopOf="@+id/update_btn"
                         app:layout_constraintEnd_toEndOf="@+id/minutes"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon1" />
@@ -426,28 +429,50 @@
                         android:fontFamily="@font/roboto"
                         android:text="@string/seconds_label"
                         android:textColor="@color/editField"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         app:layout_constraintBottom_toTopOf="@+id/update_btn"
                         app:layout_constraintEnd_toEndOf="@+id/seconds"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon2" />
 
                     <Button
                         android:id="@+id/add_season_btn"
-                        android:layout_width="48dp"
-                        android:layout_height="0dp"
-                        android:background="@drawable/arrow_down"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/add_dark"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
                         app:layout_constraintStart_toEndOf="@+id/expand_season_number"
                         app:layout_constraintTop_toTopOf="@+id/expand_season_number" />
 
                     <Button
                         android:id="@+id/subtract_season_btn"
-                        android:layout_width="48dp"
-                        android:layout_height="0dp"
-                        android:background="@drawable/arrow_down"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/subtract"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
                         app:layout_constraintEnd_toStartOf="@+id/expand_season_number"
                         app:layout_constraintTop_toTopOf="@+id/expand_season_number" />
+
+                    <Button
+                        android:id="@+id/add_episode_btn"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/add_dark"
+                        app:layout_constraintBottom_toBottomOf="@+id/expand_episode_number"
+                        app:layout_constraintStart_toEndOf="@+id/expand_episode_number"
+                        app:layout_constraintTop_toTopOf="@+id/expand_episode_number" />
+
+                    <Button
+                        android:id="@+id/subtract_episode_btn"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/subtract"
+                        app:layout_constraintBottom_toBottomOf="@+id/expand_episode_number"
+                        app:layout_constraintEnd_toStartOf="@+id/expand_episode_number"
+                        app:layout_constraintTop_toTopOf="@+id/expand_episode_number" />
 
                     <Button
                         android:id="@+id/update_btn"
@@ -455,6 +480,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimary"
                         android:text="@string/update_btn"
+                        android:textColor="@color/design_default_color_background"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -481,10 +507,12 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="gone"
                     android:background="?android:attr/listDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/expandable_view" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
