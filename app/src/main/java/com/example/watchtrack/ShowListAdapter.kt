@@ -5,10 +5,12 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.watchtrack.database.Show
 import com.example.watchtrack.databinding.ShowItemBinding
+import kotlinx.coroutines.withContext
 import org.w3c.dom.Text
 import java.lang.NumberFormatException
 
@@ -47,7 +50,6 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
         _showsSelected.value!!.clear()
     }
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item, this)
@@ -62,26 +64,60 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
         (val binding: ShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Show, adapter: ShowListAdapter) {
+            // When click and held on cardView, select the item and add to list of selected
             binding.cardView.isClickable = true
             binding.cardView.setOnLongClickListener {
                 // Remove from list if already selected, else add to list
                 if (adapter._showsSelected.value!!.contains(item))
                 {
-                    adapter._showsSelected.value!!.remove(item)
-                    binding.cardView.setBackgroundColor(Color.WHITE)
+                    removeFromSelected(adapter._showsSelected, item)
                 }
                 else
                 {
+                    // Hide expandable view if it is showing
+                    hideExpandableView(binding.expandCollapseBtn)
+
                     adapter._showsSelected.value!!.add(item)
-                    binding.cardView.setBackgroundColor(Color.RED)
+                    binding.cardView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.selectedItem))
                 }
 
-                // Update value
+                // Update shows selected value
                 adapter._showsSelected.value = adapter._showsSelected.value
 
-                false
+                true
             }
 
+            // Once selected, any further clicks should deselect and remove from selected
+            binding.cardView.setOnClickListener {
+                if (adapter._showsSelected.value!!.contains(item))
+                {
+                    removeFromSelected(adapter._showsSelected, item)
+
+                    // Update shows selected value
+                    adapter._showsSelected.value = adapter._showsSelected.value
+                }
+            }
+
+            // Set onClick listener to expand and collapse view for show item
+            binding.expandCollapseBtn.setOnClickListener(){
+                if (binding.expandableView.visibility == View.GONE)
+                {
+                    // Remove from list if currently selected when trying to expand
+                    if (adapter._showsSelected.value!!.contains(item))
+                    {
+                        removeFromSelected(adapter._showsSelected, item)
+
+                        // Update shows selected value
+                        adapter._showsSelected.value = adapter._showsSelected.value
+                    }
+
+                    showExpandableView(it)
+                }
+                else
+                {
+                    hideExpandableView(it)
+                }
+            }
 
             // Update data binding "show" variable in show_item
             binding.show = item
@@ -182,29 +218,33 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
             }
         }
 
+        // Hide expandable view and change expand button image
+        private fun hideExpandableView(view: View) {
+            binding.expandableView.visibility = View.GONE
+            binding.line.visibility = View.VISIBLE
+            binding.expandedLine.visibility = View.GONE
+            view.setBackgroundResource(R.drawable.arrow_down);
+        }
+
+        // Show expandable view and change expand button image
+        private fun showExpandableView(view: View) {
+            binding.expandableView.visibility = View.VISIBLE
+            binding.line.visibility = View.GONE
+            binding.expandedLine.visibility = View.VISIBLE
+            view.setBackgroundResource(R.drawable.arrow_up);
+        }
+
+        // Remove item from selected shows and change background color
+        private fun removeFromSelected(showsSelected: MutableLiveData<MutableList<Show>?>, item: Show) {
+            showsSelected.value!!.remove(item)
+            binding.cardView.setBackgroundColor(Color.WHITE)
+        }
+
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding =
                     ShowItemBinding.inflate(layoutInflater, parent, false)
-
-                // Set onClick listener to expand and collapse view for show item
-                binding.expandCollapseBtn.setOnClickListener(){
-                    if (binding.expandableView.visibility == View.GONE)
-                    {
-                        binding.expandableView.visibility = View.VISIBLE
-                        binding.line.visibility = View.GONE
-                        binding.expandedLine.visibility = View.VISIBLE
-                        it.setBackgroundResource(R.drawable.arrow_up);
-                    }
-                    else
-                    {
-                        binding.expandableView.visibility = View.GONE
-                        binding.line.visibility = View.VISIBLE
-                        binding.expandedLine.visibility = View.GONE
-                        it.setBackgroundResource(R.drawable.arrow_down);
-                    }
-                }
 
                 return ViewHolder(binding)
             }

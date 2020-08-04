@@ -208,7 +208,7 @@
                     app:layout_constraintStart_toEndOf="@+id/show_title"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- EXPANDLE VIEW FOR EDITING THIS SHOW ITEM -->
+                <!-- EXPANDABLE VIEW FOR EDITING THIS SHOW ITEM -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/expandable_view"
                     android:layout_width="match_parent"
@@ -217,7 +217,7 @@
                     android:layout_marginBottom="16dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"

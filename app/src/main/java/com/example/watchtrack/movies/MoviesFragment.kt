@@ -12,6 +12,9 @@ import com.example.watchtrack.databinding.MoviesFragmentBinding
 class MoviesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        // Set action bar title
+        activity?.title = "Adding Movie"
+
         // Get reference to the binding object and inflate the fragment views
         val binding: MoviesFragmentBinding = DataBindingUtil.inflate(
             inflater,

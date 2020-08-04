@@ -1,5 +1,6 @@
 package com.example.watchtrack.shows
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -73,18 +74,21 @@ class ShowsFragment : Fragment() {
             }
         })
 
+        /*
+        If no shows are selected, hide options menu and change title to app name
+        Else there are shows selected, show options menu and change title to amount selected
+         */
         adapter.showsSelected.observe(viewLifecycleOwner, Observer {
             if (it.isNullOrEmpty())
             {
                 setHasOptionsMenu(false)
-                Log.i("YUP", "its null")
+                activity?.setTitle(R.string.app_name)
             }
             else
             {
                 setHasOptionsMenu(true)
-                Log.i("YUP", it.toString())
+                activity?.title = "${it.size} Selected"
             }
-
         })
 
 
@@ -94,16 +98,13 @@ class ShowsFragment : Fragment() {
         return binding.root
     }
 
-    /*
-     Add the options menu and inflate the menu resource file.
-     */
-        // "Inflating" a view means taking the layout XML and parsing it to create the view and viewgroup objects
-        // from the elements and their attributes specified within, and then adding the hierarchy of those views and viewgroups to the parent ViewGroup
+    // Add the delete menu and inflate the menu resource file
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.delete_menu, menu)
+        inflater.inflate(R.menu.delete_menu, menu)
     }
 
+    // Delete selected items when menu item is pressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         deleteSelected()
         return super.onOptionsItemSelected(item)
@@ -111,7 +112,9 @@ class ShowsFragment : Fragment() {
 
     // Delete selected items
     private fun deleteSelected() {
-        showViewModel.onClear() // Clear for now
+        showViewModel.onClear() // Clear all for now
+
+        // Clear the list of selected shows
         adapter.resetShowsSelected()
     }
 }

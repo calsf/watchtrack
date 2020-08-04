@@ -24,6 +24,8 @@ class AddShowFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        // Set action bar title
+        activity?.title = "Adding Show"
 
         // Initialize toasts for successful and unsuccessful show add
         failToast = Toast.makeText(activity, R.string.fail_to_add_show, Toast.LENGTH_SHORT)

@@ -7,7 +7,6 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.watchtrack.HomeFragment"
-        android:label="WatchTrack"
         tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_addShowFragment"
@@ -19,7 +18,6 @@
     <fragment
         android:id="@+id/addShowFragment"
         android:name="com.example.watchtrack.shows.AddShowFragment"
-        android:label="Adding Show"
         tools:layout="@layout/add_show_fragment">
         <action
             android:id="@+id/action_addShowFragment_to_homeFragment"
@@ -28,6 +26,5 @@
     <fragment
         android:id="@+id/addMovieFragment"
         android:name="com.example.watchtrack.movies.AddMovieFragment"
-        android:label="Adding Movie"
         tools:layout="@layout/add_movie_fragment" />
 </navigation>
