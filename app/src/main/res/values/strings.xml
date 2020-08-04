@@ -18,4 +18,5 @@
     <string name="fail_to_update_show">Could not update show.</string>
     <string name="success_update_show">Show successfully updated.</string>
     <string name="update_btn">Update</string>
+    <string name="delete_label">Delete</string>
 </resources>

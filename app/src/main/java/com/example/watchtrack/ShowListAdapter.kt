@@ -1,7 +1,9 @@
 package com.example.watchtrack
 
+import android.graphics.Color
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,9 +25,7 @@ const val MAX_NUM_INPUT = 1000
 class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCallback()) {
     // When changed, ShowFragment will display a success or fail toast depending on true or false
     private var _updateStatus = MutableLiveData<Boolean?>()
-    val updateStatus: LiveData<Boolean?>
-        get() = _updateStatus
-
+    val updateStatus: LiveData<Boolean?> get() = _updateStatus
     // Reset _updateStatus value after changing
     fun resetUpdateStatus() {
         _updateStatus.value = null
@@ -33,13 +33,20 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
 
     // When changed, ShowFragment will update the item in the database
     private var _showUpdate = MutableLiveData<Show?>()
-    val showUpdate: LiveData<Show?>
-        get() = _showUpdate
-
+    val showUpdate: LiveData<Show?> get() = _showUpdate
     // Reset _showUpdate value after changing
     fun resetShowUpdate() {
         _showUpdate.value = null
     }
+
+    // When changed, ShowsFragment will enable actions to do something with the selected shows
+    private var _showsSelected = MutableLiveData<MutableList<Show>?>()
+    val showsSelected: LiveData<MutableList<Show>?> get() = _showsSelected
+    // Clear _showsSelected list
+    fun resetShowsSelected() {
+        _showsSelected.value!!.clear()
+    }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -47,6 +54,7 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        _showsSelected.value = ArrayList()
         return ViewHolder.from(parent)
     }
 
@@ -54,6 +62,27 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
         (val binding: ShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Show, adapter: ShowListAdapter) {
+            binding.cardView.isClickable = true
+            binding.cardView.setOnLongClickListener {
+                // Remove from list if already selected, else add to list
+                if (adapter._showsSelected.value!!.contains(item))
+                {
+                    adapter._showsSelected.value!!.remove(item)
+                    binding.cardView.setBackgroundColor(Color.WHITE)
+                }
+                else
+                {
+                    adapter._showsSelected.value!!.add(item)
+                    binding.cardView.setBackgroundColor(Color.RED)
+                }
+
+                // Update value
+                adapter._showsSelected.value = adapter._showsSelected.value
+
+                false
+            }
+
+
             // Update data binding "show" variable in show_item
             binding.show = item
 
@@ -75,7 +104,7 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
             binding.seconds.minutes = binding.minutes
             binding.seconds.seconds = binding.seconds
 
-            // Set onClick listener to add 1 and subtract 1 to season input
+            // Set onClick listener to add 1 and subtract_box 1 to season input
             binding.addSeasonBtn.setOnClickListener {
                 addOne(binding.expandSeasonNumber, MAX_NUM_INPUT)
             }
@@ -83,7 +112,7 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
                 subOne(binding.expandSeasonNumber, 0)
             }
 
-            // Set onClick listener to add 1 and subtract 1 to episode input
+            // Set onClick listener to add 1 and subtract_box 1 to episode input
             binding.addEpisodeBtn.setOnClickListener {
                 addOne(binding.expandEpisodeNumber, MAX_NUM_INPUT)
             }

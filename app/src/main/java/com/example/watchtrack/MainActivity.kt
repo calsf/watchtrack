@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
+
         // Remove action bar shadow
         supportActionBar?.elevation = 0f
     }

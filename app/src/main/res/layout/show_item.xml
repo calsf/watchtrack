@@ -39,11 +39,11 @@
                     android:paddingStart="8dp"
                     android:textColor="@color/defaultText"
                     android:textSize="24sp"
-                    app:title="@{show}"
                     app:layout_constraintEnd_toEndOf="@+id/expand_collapse_btn"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{show}"
                     tools:text="Breaking Bad" />
 
                 <TextView
@@ -66,11 +66,11 @@
                     android:maxLength="3"
                     android:paddingStart="8dp"
                     android:textColor="@color/defaultText"
-                    app:season="@{show}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/season_label"
                     app:layout_constraintTop_toTopOf="@+id/season_label"
+                    app:season="@{show}"
                     tools:text="222" />
 
                 <TextView
@@ -92,8 +92,8 @@
                     android:layout_height="wrap_content"
                     android:maxLength="3"
                     android:paddingStart="8dp"
-                    app:episode="@{show}"
                     android:textColor="@color/defaultText"
+                    app:episode="@{show}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/episode_num_label"
@@ -151,13 +151,13 @@
                     android:textAlignment="center"
                     android:textColor="@color/defaultText"
                     android:textSize="14sp"
-                    app:minutes="@{show}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/colon2"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/colon1"
                     app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
-                    app:layout_constraintVertical_bias="0" />
+                    app:layout_constraintVertical_bias="0"
+                    app:minutes="@{show}" />
 
                 <TextView
                     android:id="@+id/colon2"
@@ -188,13 +188,13 @@
                     android:textAlignment="center"
                     android:textColor="@color/defaultText"
                     android:textSize="14sp"
-                    app:seconds="@{show}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/colon2"
                     app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
-                    app:layout_constraintVertical_bias="0" />
+                    app:layout_constraintVertical_bias="0"
+                    app:seconds="@{show}" />
 
                 <Button
                     android:id="@+id/expand_collapse_btn"
@@ -434,45 +434,45 @@
                         app:layout_constraintEnd_toEndOf="@+id/seconds"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon2" />
 
-                    <Button
+                    <ImageView
                         android:id="@+id/add_season_btn"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/add_dark"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
                         app:layout_constraintStart_toEndOf="@+id/expand_season_number"
-                        app:layout_constraintTop_toTopOf="@+id/expand_season_number" />
+                        app:layout_constraintTop_toTopOf="@+id/expand_season_number"
+                        app:srcCompat="@drawable/add_box" />
 
-                    <Button
+                    <ImageView
                         android:id="@+id/subtract_season_btn"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/subtract"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
                         app:layout_constraintEnd_toStartOf="@+id/expand_season_number"
-                        app:layout_constraintTop_toTopOf="@+id/expand_season_number" />
+                        app:layout_constraintTop_toTopOf="@+id/expand_season_number"
+                        app:srcCompat="@drawable/subtract_box" />
 
-                    <Button
+                    <ImageView
                         android:id="@+id/add_episode_btn"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/add_dark"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_episode_number"
                         app:layout_constraintStart_toEndOf="@+id/expand_episode_number"
-                        app:layout_constraintTop_toTopOf="@+id/expand_episode_number" />
+                        app:layout_constraintTop_toTopOf="@+id/expand_episode_number"
+                        app:srcCompat="@drawable/add_box" />
 
-                    <Button
+                    <ImageView
                         android:id="@+id/subtract_episode_btn"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/subtract"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_episode_number"
                         app:layout_constraintEnd_toStartOf="@+id/expand_episode_number"
-                        app:layout_constraintTop_toTopOf="@+id/expand_episode_number" />
+                        app:layout_constraintTop_toTopOf="@+id/expand_episode_number"
+                        app:srcCompat="@drawable/subtract_box" />
 
                     <Button
                         android:id="@+id/update_btn"
@@ -507,8 +507,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:visibility="gone"
                     android:background="?android:attr/listDivider"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/expandable_view" />
