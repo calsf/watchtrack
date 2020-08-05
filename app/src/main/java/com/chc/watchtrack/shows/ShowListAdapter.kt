@@ -22,6 +22,8 @@ const val MAX_NUM_INPUT = 1000
 // ListAdapter will use ShowDiffCallback to determine what Shows have changed with ViewHolder
 class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCallback())
 {
+    var selectedAll = false
+
     // When changed, ShowFragment will display a success or fail toast depending on true or false
     private var _updateStatus = MutableLiveData<Boolean?>()
     val updateStatus: LiveData<Boolean?> get() = _updateStatus
@@ -44,6 +46,9 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
     // Clear _showsSelected list
     fun resetShowsSelected() {
         _showsSelected.value!!.clear()
+
+        // Update shows selected value
+        _showsSelected.value = _showsSelected.value
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -59,6 +64,12 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
     class ViewHolder private constructor
         (val binding: ShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Show, adapter: ShowListAdapter) {
+            // Reset background color if not selected
+            if (!adapter._showsSelected.value!!.contains(item))
+            {
+                binding.cardView.setBackgroundColor(Color.WHITE)
+            }
+
             // Update data binding "show" variable in show_item
             binding.show = item
 
@@ -173,6 +184,24 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
                     adapter._updateStatus.value = false
                     adapter.resetUpdateStatus()
                 }
+            }
+
+            // If all items are to be selected, check if this item is selected and add if not
+            if (adapter.selectedAll)
+            {
+                if (!adapter._showsSelected.value!!.contains(item))
+                {
+                    // Hide expandable view if it is showing upon selecting
+                    if (binding.expandableView.visibility == View.VISIBLE)
+                    {
+                        hideExpandableView()
+                    }
+
+                    addToSelected(adapter._showsSelected, item)
+                }
+
+                // Update shows selected value
+                adapter._showsSelected.value = adapter._showsSelected.value
             }
 
             // Execute any pending bindings

@@ -23,4 +23,7 @@
     <string name="subtract_season_desc">Subtract Season</string>
     <string name="add_episode_desc">Add Episode</string>
     <string name="subtract_episode_desc">Subtract Episode</string>
+    <string name="confirm_delete_text">Selected items will be deleted</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="select_all_label">Select All</string>
 </resources>

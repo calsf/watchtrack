@@ -3,14 +3,17 @@ package com.chc.watchtrack.shows
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.chc.watchtrack.*
+import com.chc.watchtrack.DeletePopup
+import com.chc.watchtrack.R
 import com.chc.watchtrack.database.Show
 import com.chc.watchtrack.database.WatchDatabase
 import com.chc.watchtrack.databinding.ShowsFragmentBinding
+
 
 class ShowsFragment : Fragment() {
     private lateinit var failToast: Toast
@@ -82,11 +85,21 @@ class ShowsFragment : Fragment() {
             if (it.isNullOrEmpty())
             {
                 setHasOptionsMenu(false)
+
+                // Hide clear icon next to title
+                (activity as AppCompatActivity?)!!.supportActionBar?.
+                setDisplayHomeAsUpEnabled(false)
+
                 activity?.setTitle(R.string.app_name)
             }
             else
             {
                 setHasOptionsMenu(true)
+
+                // Show clear icon next to title
+                (activity as AppCompatActivity?)!!.supportActionBar?.
+                setDisplayHomeAsUpEnabled(true)
+
                 activity?.title = "${it.size} Selected"
             }
         })
@@ -100,17 +113,40 @@ class ShowsFragment : Fragment() {
     // Add the delete menu and inflate the menu resource file
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.delete_menu, menu)
+        inflater.inflate(R.menu.selected_menu, menu)
+
+        // Replace up with clear icon
+        (activity as AppCompatActivity?)!!.supportActionBar?.
+        setHomeAsUpIndicator(R.drawable.ic_clear)
     }
 
-    // Delete selected items when menu item is pressed
+    /*
+    Show delete popup to confirm deletion of selected items
+    Pass in the delete action
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        deleteSelected()
+        when (item.itemId)
+        {
+            R.id.delete -> {
+                val deletePopup = DeletePopup()
+                deletePopup.showDeletePopup(requireActivity()) { deleteSelected() }
+            }
+            R.id.select_all -> {
+                adapter.selectedAll = true
+                adapter.notifyDataSetChanged()
+            }
+            android.R.id.home -> {
+                adapter.selectedAll = false
+                adapter.resetShowsSelected()
+                adapter.notifyDataSetChanged()
+            }
+        }
+
         return super.onOptionsItemSelected(item)
     }
 
-    // Delete selected items
-    private fun deleteSelected() {
+    // Delete selected show items
+    private fun deleteSelected () {
         val list: MutableList<Show> = ArrayList()
         list.addAll(adapter.showsSelected.value!!)
         showViewModel.deleteShows(list)
@@ -122,4 +158,5 @@ class ShowsFragment : Fragment() {
         setHasOptionsMenu(false)
         activity?.setTitle(R.string.app_name)
     }
+
 }
