@@ -1,4 +1,4 @@
-package com.example.watchtrack
+package com.chc.watchtrack
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

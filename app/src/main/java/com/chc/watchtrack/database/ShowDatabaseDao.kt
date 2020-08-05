@@ -1,10 +1,7 @@
-package com.example.watchtrack.database
+package com.chc.watchtrack.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 // Data access object
 @Dao
@@ -18,13 +15,13 @@ interface ShowDatabaseDao
     @Update
     fun update(show: Show)
 
+    // Delete show
+    @Delete
+    fun delete(show: Show)
+
     // Get an item from the table, return nullable for empty cases
     @Query ("SELECT * from show_table WHERE showId = :key")
     fun get(key: Long): Show?
-
-    // Deletes all items in "show_table"
-    @Query ("DELETE FROM show_table")
-    fun clear()
 
     // Return the first element of list where showId is in descending order
     @Query ("SELECT * FROM show_table ORDER BY showId DESC LIMIT 1")

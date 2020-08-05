@@ -1,31 +1,27 @@
-package com.example.watchtrack
+package com.chc.watchtrack.shows
 
 import android.graphics.Color
-import android.transition.AutoTransition
-import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.watchtrack.database.Show
-import com.example.watchtrack.databinding.ShowItemBinding
-import kotlinx.coroutines.withContext
-import org.w3c.dom.Text
+import com.chc.watchtrack.R
+import com.chc.watchtrack.database.Show
+import com.chc.watchtrack.databinding.ShowItemBinding
 import java.lang.NumberFormatException
 
 const val MAX_NUM_INPUT = 1000
 
 // ListAdapter will use ShowDiffCallback to determine what Shows have changed with ViewHolder
-class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCallback()) {
+class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCallback())
+{
     // When changed, ShowFragment will display a success or fail toast depending on true or false
     private var _updateStatus = MutableLiveData<Boolean?>()
     val updateStatus: LiveData<Boolean?> get() = _updateStatus
@@ -62,8 +58,22 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
 
     class ViewHolder private constructor
         (val binding: ShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: Show, adapter: ShowListAdapter) {
+            // Update data binding "show" variable in show_item
+            binding.show = item
+
+            // Assign the EditTextTimes, setEditTexts ensures they are only assigned once
+            binding.hours.setEditTexts(binding.hours, binding.minutes, binding.seconds)
+            binding.minutes.setEditTexts(binding.hours, binding.minutes, binding.seconds)
+            binding.seconds.setEditTexts(binding.hours, binding.minutes, binding.seconds)
+
+            // Initialize and set expandable view input values to item current values
+            binding.expandSeasonNumber.setText(item.season.toString())
+            binding.expandEpisodeNumber.setText(item.episode.toString())
+            binding.hours.setText(item.hours.toString().padStart(3, '0'))
+            binding.minutes.setText(item.minutes.toString().padStart(3, '0'))
+            binding.seconds.setText(item.seconds.toString().padStart(3, '0'))
+
             // When click and held on cardView, select the item and add to list of selected
             binding.cardView.isClickable = true
             binding.cardView.setOnLongClickListener {
@@ -74,11 +84,13 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
                 }
                 else
                 {
-                    // Hide expandable view if it is showing
-                    hideExpandableView(binding.expandCollapseBtn)
+                    // Hide expandable view if it is showing upon selecting
+                    if (binding.expandableView.visibility == View.VISIBLE)
+                    {
+                        hideExpandableView()
+                    }
 
-                    adapter._showsSelected.value!!.add(item)
-                    binding.cardView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.selectedItem))
+                    addToSelected(adapter._showsSelected, item)
                 }
 
                 // Update shows selected value
@@ -87,58 +99,36 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
                 true
             }
 
-            // Once selected, any further clicks should deselect and remove from selected
+            /*
+            If selectedShows list has at least 1 item, clicking on item will select/deselect item
+            Else, clicking on item will show or hide expandable view to allow for quick edit
+             */
             binding.cardView.setOnClickListener {
-                if (adapter._showsSelected.value!!.contains(item))
-                {
-                    removeFromSelected(adapter._showsSelected, item)
+                //
+                if (adapter._showsSelected.value!!.size > 0) {
+                    if (adapter._showsSelected.value!!.contains(item))
+                    {
+                        removeFromSelected(adapter._showsSelected, item)
+                    }
+                    else
+                    {
+                        addToSelected(adapter._showsSelected, item)
+                    }
 
                     // Update shows selected value
                     adapter._showsSelected.value = adapter._showsSelected.value
                 }
-            }
-
-            // Set onClick listener to expand and collapse view for show item
-            binding.expandCollapseBtn.setOnClickListener(){
-                if (binding.expandableView.visibility == View.GONE)
-                {
-                    // Remove from list if currently selected when trying to expand
-                    if (adapter._showsSelected.value!!.contains(item))
-                    {
-                        removeFromSelected(adapter._showsSelected, item)
-
-                        // Update shows selected value
-                        adapter._showsSelected.value = adapter._showsSelected.value
-                    }
-
-                    showExpandableView(it)
-                }
                 else
                 {
-                    hideExpandableView(it)
+                    if (binding.expandableView.visibility == View.GONE)
+                    {
+                        showExpandableView()
+                    } else
+                    {
+                        hideExpandableView()
+                    }
                 }
             }
-
-            // Update data binding "show" variable in show_item
-            binding.show = item
-
-            // Initialize and set expandable view input values to item current values only once
-            binding.expandSeasonNumber.setText(item.season.toString())
-            binding.expandEpisodeNumber.setText(item.episode.toString())
-            binding.hours.setText(item.hours.toString().padStart(2, '0'))
-            binding.minutes.setText(item.minutes.toString().padStart(2, '0'))
-            binding.seconds.setText(item.seconds.toString().padStart(2, '0'))
-
-            // Assign the EditTextTimes
-            binding.hours.hours = binding.hours
-            binding.hours.minutes = binding.minutes
-            binding.hours.seconds = binding.seconds
-            binding.minutes.hours = binding.hours
-            binding.minutes.minutes = binding.minutes
-            binding.minutes.seconds = binding.seconds
-            binding.seconds.hours = binding.hours
-            binding.seconds.minutes = binding.minutes
-            binding.seconds.seconds = binding.seconds
 
             // Set onClick listener to add 1 and subtract_box 1 to season input
             binding.addSeasonBtn.setOnClickListener {
@@ -164,7 +154,7 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
                     item.hours = binding.hours.text.toString().toInt()
                     item.minutes = binding.minutes.text.toString().toInt()
                     item.seconds = binding.seconds.text.toString().toInt()
-                    binding.show = item // Update the show binding so changes are displayed
+                    binding.show = item // Update show binding
 
                     // Update status to true to trigger success toast in ShowsFragment
                     adapter._updateStatus.value = true
@@ -173,6 +163,9 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
                     // Update show so that ShowsFragment knows to update the show in database
                     adapter._showUpdate.value = item
                     adapter.resetShowUpdate()
+
+                    // Hide expandable view upon successful update
+                    hideExpandableView()
                 }
                 catch (nfe: NumberFormatException)
                 {
@@ -191,7 +184,7 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
         {
             try {
                 // Make sure adding 1 will not go over limit
-                var curr = view.text.toString().toInt()
+                val curr = view.text.toString().toInt()
                 if (curr + 1 < limit) {
                     view.text = (curr + 1).toString()
                 }
@@ -207,7 +200,7 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
         {
             try {
                 // Make sure subtracting 1 does not go into negatives
-                var curr = view.text.toString().toInt()
+                val curr = view.text.toString().toInt()
                 if (curr - 1 >= min) {
                     view.text = (curr - 1).toString()
                 }
@@ -219,25 +212,34 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
         }
 
         // Hide expandable view and change expand button image
-        private fun hideExpandableView(view: View) {
+        private fun hideExpandableView() {
             binding.expandableView.visibility = View.GONE
             binding.line.visibility = View.VISIBLE
             binding.expandedLine.visibility = View.GONE
-            view.setBackgroundResource(R.drawable.arrow_down);
         }
 
         // Show expandable view and change expand button image
-        private fun showExpandableView(view: View) {
+        private fun showExpandableView() {
             binding.expandableView.visibility = View.VISIBLE
             binding.line.visibility = View.GONE
             binding.expandedLine.visibility = View.VISIBLE
-            view.setBackgroundResource(R.drawable.arrow_up);
         }
 
         // Remove item from selected shows and change background color
-        private fun removeFromSelected(showsSelected: MutableLiveData<MutableList<Show>?>, item: Show) {
+        private fun removeFromSelected
+                    (showsSelected: MutableLiveData<MutableList<Show>?>, item: Show)
+        {
             showsSelected.value!!.remove(item)
             binding.cardView.setBackgroundColor(Color.WHITE)
+        }
+
+        // Add item to selected shows and change background color
+        private fun addToSelected(showsSelected: MutableLiveData<MutableList<Show>?>, item: Show) {
+            showsSelected.value!!.add(item)
+            binding.cardView.setBackgroundColor(
+                ContextCompat.getColor(binding.root.context,
+                    R.color.selectedItem
+                ))
         }
 
         companion object {
@@ -246,12 +248,13 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
                 val binding =
                     ShowItemBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding)
+                return ViewHolder(
+                    binding
+                )
             }
         }
     }
 }
-
 
 // DiffUtil
 class ShowDiffCallback : DiffUtil.ItemCallback<Show>() {

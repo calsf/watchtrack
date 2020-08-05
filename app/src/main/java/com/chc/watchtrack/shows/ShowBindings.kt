@@ -1,8 +1,8 @@
-package com.example.watchtrack
+package com.chc.watchtrack.shows
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.example.watchtrack.database.Show
+import com.chc.watchtrack.database.Show
 /*
 Bind and display Show values in show_item.xml text views
  */

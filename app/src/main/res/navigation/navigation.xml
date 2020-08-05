@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.watchtrack.HomeFragment"
+        android:name="com.chc.watchtrack.HomeFragment"
         tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_addShowFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/addShowFragment"
-        android:name="com.example.watchtrack.shows.AddShowFragment"
+        android:name="com.chc.watchtrack.shows.AddShowFragment"
         tools:layout="@layout/add_show_fragment">
         <action
             android:id="@+id/action_addShowFragment_to_homeFragment"
@@ -25,6 +25,6 @@
     </fragment>
     <fragment
         android:id="@+id/addMovieFragment"
-        android:name="com.example.watchtrack.movies.AddMovieFragment"
+        android:name="com.chc.watchtrack.movies.AddMovieFragment"
         tools:layout="@layout/add_movie_fragment" />
 </navigation>

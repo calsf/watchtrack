@@ -6,5 +6,5 @@
     <color name="editField">#808080</color>
     <color name="defaultText">#000000</color>
     <color name="focusedText">#229E63</color>
-    <color name="selectedItem">#8D39FFFF</color>
+    <color name="selectedItem">#8DBEE4E4</color>
 </resources>

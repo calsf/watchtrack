@@ -1,4 +1,4 @@
-package com.example.watchtrack.shows
+package com.chc.watchtrack.shows
 
 
 import android.os.Bundle
@@ -8,14 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.watchtrack.R
-import com.example.watchtrack.ShowViewModel
-import com.example.watchtrack.ShowViewModelFactory
-import com.example.watchtrack.database.WatchDatabase
-import com.example.watchtrack.databinding.AddShowFragmentBinding
+import com.chc.watchtrack.R
+import com.chc.watchtrack.database.WatchDatabase
+import com.chc.watchtrack.databinding.AddShowFragmentBinding
 
 
 class AddShowFragment : Fragment() {
@@ -37,20 +34,18 @@ class AddShowFragment : Fragment() {
             R.layout.add_show_fragment, container, false)
 
         // Assign the EditTextTimes
-        binding.hours.hours = binding.hours
-        binding.hours.minutes = binding.minutes
-        binding.hours.seconds = binding.seconds
-        binding.minutes.hours = binding.hours
-        binding.minutes.minutes = binding.minutes
-        binding.minutes.seconds = binding.seconds
-        binding.seconds.hours = binding.hours
-        binding.seconds.minutes = binding.minutes
-        binding.seconds.seconds = binding.seconds
+        binding.hours.setEditTexts(binding.hours, binding.minutes, binding.seconds)
+        binding.minutes.setEditTexts(binding.hours, binding.minutes, binding.seconds)
+        binding.seconds.setEditTexts(binding.hours, binding.minutes, binding.seconds)
 
         // Create an instance of ShowViewModelFactory
         val application = requireNotNull(this.activity).application
         val dataSource = WatchDatabase.getInstance(application).showDatabaseDao
-        val showViewModelFactory = ShowViewModelFactory(dataSource, application)
+        val showViewModelFactory =
+            ShowViewModelFactory(
+                dataSource,
+                application
+            )
 
         // Get reference to ShowViewModel
         val showViewModel =

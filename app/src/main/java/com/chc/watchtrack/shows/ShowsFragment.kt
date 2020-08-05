@@ -1,20 +1,16 @@
-package com.example.watchtrack.shows
+package com.chc.watchtrack.shows
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.watchtrack.*
-import com.example.watchtrack.database.WatchDatabase
-import com.example.watchtrack.databinding.ShowsFragmentBinding
+import com.chc.watchtrack.*
+import com.chc.watchtrack.database.Show
+import com.chc.watchtrack.database.WatchDatabase
+import com.chc.watchtrack.databinding.ShowsFragmentBinding
 
 class ShowsFragment : Fragment() {
     private lateinit var failToast: Toast
@@ -36,7 +32,11 @@ class ShowsFragment : Fragment() {
         // Create an instance of ShowViewModelFactory
         val application = requireNotNull(this.activity).application
         val dataSource = WatchDatabase.getInstance(application).showDatabaseDao
-        val showViewModelFactory = ShowViewModelFactory(dataSource, application)
+        val showViewModelFactory =
+            ShowViewModelFactory(
+                dataSource,
+                application
+            )
 
         // Get reference to ShowViewModel
         showViewModel =
@@ -91,7 +91,6 @@ class ShowsFragment : Fragment() {
             }
         })
 
-
         // Set lifecycle owner to observe LiveData updates
         binding.lifecycleOwner = this
 
@@ -112,9 +111,15 @@ class ShowsFragment : Fragment() {
 
     // Delete selected items
     private fun deleteSelected() {
-        showViewModel.onClear() // Clear all for now
+        val list: MutableList<Show> = ArrayList()
+        list.addAll(adapter.showsSelected.value!!)
+        showViewModel.deleteShows(list)
 
         // Clear the list of selected shows
         adapter.resetShowsSelected()
+
+        // Reset title and hide options menu
+        setHasOptionsMenu(false)
+        activity?.setTitle(R.string.app_name)
     }
 }

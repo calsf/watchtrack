@@ -1,18 +1,14 @@
-package com.example.watchtrack
+package com.chc.watchtrack
 
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.viewpager2.widget.ViewPager2
-import com.example.watchtrack.database.WatchDatabase
-import com.example.watchtrack.databinding.HomeFragmentBinding
-import com.example.watchtrack.movies.MoviesFragment
-import com.example.watchtrack.shows.ShowsFragment
+import com.chc.watchtrack.databinding.HomeFragmentBinding
+import com.chc.watchtrack.movies.MoviesFragment
+import com.chc.watchtrack.shows.ShowsFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 

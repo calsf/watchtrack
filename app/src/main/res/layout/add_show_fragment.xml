@@ -53,7 +53,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_input" />
 
-        <com.example.watchtrack.EditTextSetEnd
+        <com.chc.watchtrack.EditTextSetEnd
             android:id="@+id/season_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
             app:layout_constraintStart_toEndOf="@+id/season_label"
             app:layout_constraintTop_toBottomOf="@+id/title_input" />
 
-        <com.example.watchtrack.EditTextSetEnd
+        <com.chc.watchtrack.EditTextSetEnd
             android:id="@+id/episode_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
             app:layout_constraintStart_toStartOf="@+id/episode_num_label"
             app:layout_constraintTop_toBottomOf="@+id/episode_num_label" />
 
-        <com.example.watchtrack.EditTextTime
+        <com.chc.watchtrack.EditTextTime
             android:id="@+id/hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
             app:layout_constraintStart_toEndOf="@+id/hours"
             app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
 
-        <com.example.watchtrack.EditTextTime
+        <com.chc.watchtrack.EditTextTime
             android:id="@+id/minutes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
             app:layout_constraintStart_toEndOf="@+id/minutes"
             app:layout_constraintTop_toBottomOf="@+id/episode_time_label" />
 
-        <com.example.watchtrack.EditTextTime
+        <com.chc.watchtrack.EditTextTime
             android:id="@+id/seconds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

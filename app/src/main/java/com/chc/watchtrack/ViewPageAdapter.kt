@@ -1,4 +1,4 @@
-package com.example.watchtrack
+package com.chc.watchtrack
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

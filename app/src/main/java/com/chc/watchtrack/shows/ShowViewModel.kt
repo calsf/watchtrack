@@ -1,13 +1,14 @@
-package com.example.watchtrack
+package com.chc.watchtrack.shows
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import com.example.watchtrack.database.Show
-import com.example.watchtrack.database.ShowDatabaseDao
+import com.chc.watchtrack.database.Show
+import com.chc.watchtrack.database.ShowDatabaseDao
 import kotlinx.coroutines.*
 
 class ShowViewModel (
-    private val dataSource: ShowDatabaseDao, application: Application
+    dataSource: ShowDatabaseDao, application: Application
 ) : AndroidViewModel(application) {
     // Data access object reference
     val database = dataSource
@@ -35,10 +36,12 @@ class ShowViewModel (
         }
     }
 
-    // Clear table coroutine
-    private suspend fun clear() {
+    // Delete all shows in given list
+    private suspend fun delete(shows: List<Show>?){
         withContext(Dispatchers.IO) {
-            database.clear()
+            shows?.forEach {
+                database.delete(it)
+            }
         }
     }
 
@@ -60,18 +63,15 @@ class ShowViewModel (
     // Update show in ShowsFragment when update status is true
     fun updateShow(show: Show)
     {
-        // Cancel all coroutines before updating
-        viewModelJob.cancel()
-
         uiScope.launch {
             update(show)
         }
     }
 
-    // For onClick, clear table
-    fun onClear() {
+    // Delete list of shows
+    fun deleteShows(shows: List<Show>?){
         uiScope.launch {
-            clear()
+            delete(shows)
         }
     }
 

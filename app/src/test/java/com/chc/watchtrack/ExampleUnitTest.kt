@@ -1,4 +1,4 @@
-package com.example.watchtrack
+package com.chc.watchtrack
 
 import org.junit.Test
 

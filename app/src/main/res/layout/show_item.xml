@@ -6,7 +6,7 @@
     <data>
         <variable
             name="show"
-            type="com.example.watchtrack.database.Show"/>
+            type="com.chc.watchtrack.database.Show"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,9 +37,10 @@
                     android:layout_marginEnd="64dp"
                     android:fontFamily="@font/roboto"
                     android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:textColor="@color/defaultText"
                     android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="@+id/expand_collapse_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -51,6 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:text="@string/season_text"
                     android:textColor="@color/defaultText"
                     app:layout_constraintEnd_toStartOf="@+id/season_num"
@@ -65,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:maxLength="3"
                     android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:textColor="@color/defaultText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
@@ -78,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:text="@string/episode_number_text"
                     android:textColor="@color/defaultText"
                     app:layout_constraintEnd_toStartOf="@+id/episode_num"
@@ -92,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:maxLength="3"
                     android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:textColor="@color/defaultText"
                     app:episode="@{show}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -196,18 +201,6 @@
                     app:layout_constraintVertical_bias="0"
                     app:seconds="@{show}" />
 
-                <Button
-                    android:id="@+id/expand_collapse_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/arrow_down"
-                    android:scaleX=".5"
-                    android:scaleY=".5"
-                    app:layout_constraintBottom_toBottomOf="@+id/seconds_display"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/show_title"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <!-- EXPANDABLE VIEW FOR EDITING THIS SHOW ITEM -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/expandable_view"
@@ -239,7 +232,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.example.watchtrack.EditTextSetEnd
+                    <com.chc.watchtrack.EditTextSetEnd
                         android:id="@+id/expand_season_number"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -274,7 +267,7 @@
                         app:layout_constraintStart_toEndOf="@+id/expanded_season_label"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.example.watchtrack.EditTextSetEnd
+                    <com.chc.watchtrack.EditTextSetEnd
                         android:id="@+id/expand_episode_number"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -296,7 +289,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/expanded_episode_num_label" />
 
                     <!-- TIME INPUT -->
-                    <com.example.watchtrack.EditTextTime
+                    <com.chc.watchtrack.EditTextTime
                         android:id="@+id/hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -335,7 +328,7 @@
                         app:layout_constraintStart_toEndOf="@+id/hours"
                         app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
 
-                    <com.example.watchtrack.EditTextTime
+                    <com.chc.watchtrack.EditTextTime
                         android:id="@+id/minutes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -372,7 +365,7 @@
                         app:layout_constraintStart_toEndOf="@+id/minutes"
                         app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
 
-                    <com.example.watchtrack.EditTextTime
+                    <com.chc.watchtrack.EditTextTime
                         android:id="@+id/seconds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -438,6 +431,7 @@
                         android:id="@+id/add_season_btn"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:contentDescription="@string/add_season_desc"
                         android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
                         app:layout_constraintStart_toEndOf="@+id/expand_season_number"
@@ -448,6 +442,7 @@
                         android:id="@+id/subtract_season_btn"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:contentDescription="@string/subtract_season_desc"
                         android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
                         app:layout_constraintEnd_toStartOf="@+id/expand_season_number"
@@ -458,6 +453,7 @@
                         android:id="@+id/add_episode_btn"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:contentDescription="@string/add_episode_desc"
                         android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_episode_number"
                         app:layout_constraintStart_toEndOf="@+id/expand_episode_number"
@@ -468,6 +464,7 @@
                         android:id="@+id/subtract_episode_btn"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:contentDescription="@string/subtract_episode_desc"
                         android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/expand_episode_number"
                         app:layout_constraintEnd_toStartOf="@+id/expand_episode_number"
@@ -492,9 +489,9 @@
                     android:id="@+id/line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="0dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="0dp"
                     android:background="?android:attr/listDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -504,9 +501,9 @@
                     android:id="@+id/expanded_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="0dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="0dp"
                     android:background="?android:attr/listDivider"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"

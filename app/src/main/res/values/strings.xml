@@ -19,4 +19,8 @@
     <string name="success_update_show">Show successfully updated.</string>
     <string name="update_btn">Update</string>
     <string name="delete_label">Delete</string>
+    <string name="add_season_desc">Add Season</string>
+    <string name="subtract_season_desc">Subtract Season</string>
+    <string name="add_episode_desc">Add Episode</string>
+    <string name="subtract_episode_desc">Subtract Episode</string>
 </resources>

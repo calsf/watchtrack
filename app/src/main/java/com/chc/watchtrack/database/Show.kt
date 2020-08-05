@@ -1,4 +1,4 @@
-package com.example.watchtrack.database
+package com.chc.watchtrack.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
