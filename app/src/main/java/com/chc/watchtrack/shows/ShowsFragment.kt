@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.chc.watchtrack.DeletePopup
 import com.chc.watchtrack.R
 import com.chc.watchtrack.database.ShowEntity
@@ -23,9 +25,6 @@ class ShowsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Set action bar title
-        activity?.title = resources.getString(R.string.app_name)
-
         // Initialize toasts for successful and unsuccessful show update
         failToast = Toast.makeText(activity, R.string.fail_to_update_show, Toast.LENGTH_SHORT)
         successToast = Toast.makeText(activity, R.string.success_update_show, Toast.LENGTH_LONG)
@@ -51,6 +50,9 @@ class ShowsFragment : Fragment() {
         // Set adapter to use for showsList RecyclerView display
         adapter = ShowListAdapter()
         binding.showsList.adapter = adapter
+
+        // Check selected to set action bar title
+        checkSelected(adapter.showsSelected.value)
 
         // ListAdapter detects changes in items and updates the shows in RecyclerView
         showViewModel.shows.observe(viewLifecycleOwner, Observer {
@@ -85,25 +87,22 @@ class ShowsFragment : Fragment() {
         Else there are shows selected, show options menu and change title to amount selected
          */
         adapter.showsSelected.observe(viewLifecycleOwner, Observer {
-            if (it.isNullOrEmpty())
-            {
-                setHasOptionsMenu(false)
-
-                // Hide clear icon next to title
-                (activity as AppCompatActivity?)!!.supportActionBar?.
-                setDisplayHomeAsUpEnabled(false)
-
-                activity?.title = resources.getString(R.string.app_name)
+            it?.let {
+                checkSelected(it)
             }
-            else
-            {
-                setHasOptionsMenu(true)
+        })
 
-                // Show clear icon next to title
-                (activity as AppCompatActivity?)!!.supportActionBar?.
-                setDisplayHomeAsUpEnabled(true)
-
-                activity?.title = "${it.size} Selected"
+        // If RecyclerView is empty, show empty text
+        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            override fun onChanged() {
+                super.onChanged()
+                if (adapter.itemCount == 0) {
+                    binding.emptyText.visibility = View.VISIBLE
+                }
+                else
+                {
+                    binding.emptyText.visibility = View.GONE
+                }
             }
         })
 
@@ -111,6 +110,30 @@ class ShowsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+
+    // Check selected list to determine if in select mode or not
+    private fun checkSelected(selected: MutableList<ShowEntity>?) {
+        if (selected.isNullOrEmpty())
+        {
+            setHasOptionsMenu(false)
+
+            // Hide clear icon next to title
+            (activity as AppCompatActivity?)!!.supportActionBar?.
+            setDisplayHomeAsUpEnabled(false)
+
+            activity?.title = resources.getString(R.string.app_name)
+        }
+        else
+        {
+            setHasOptionsMenu(true)
+
+            // Show clear icon next to title
+            (activity as AppCompatActivity?)!!.supportActionBar?.
+            setDisplayHomeAsUpEnabled(true)
+
+            activity?.title = "${selected.size} Selected"
+        }
     }
 
     // Add the delete menu and inflate the menu resource file
@@ -146,6 +169,12 @@ class ShowsFragment : Fragment() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    // Check for selected items onResume
+    override fun onResume() {
+        super.onResume()
+        checkSelected(adapter.showsSelected.value)
     }
 
     // Delete selected show items

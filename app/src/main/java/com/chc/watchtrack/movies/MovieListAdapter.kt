@@ -220,7 +220,8 @@ class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(M
         }
 
         // Add item to selected movies and change background color
-        private fun addToSelected(moviesSelected: MutableLiveData<MutableList<MovieEntity>?>, item: MovieEntity) {
+        private fun addToSelected(moviesSelected: MutableLiveData<MutableList<MovieEntity>?>,
+                                  item: MovieEntity) {
             moviesSelected.value!!.add(item)
             binding.cardView.setBackgroundColor(
                 ContextCompat.getColor(binding.root.context,

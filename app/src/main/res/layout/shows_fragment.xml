@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".shows.ShowsFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shows_list"
         android:layout_width="0dp"
@@ -18,6 +17,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/empty_shows_text"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/shows_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shows_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

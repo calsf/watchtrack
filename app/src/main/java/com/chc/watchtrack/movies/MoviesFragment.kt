@@ -8,9 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.chc.watchtrack.DeletePopup
 import com.chc.watchtrack.R
 import com.chc.watchtrack.database.MovieEntity
+import com.chc.watchtrack.database.ShowEntity
 import com.chc.watchtrack.database.WatchDatabase
 import com.chc.watchtrack.databinding.MoviesFragmentBinding
 
@@ -51,6 +53,9 @@ class MoviesFragment : Fragment() {
         adapter = MovieListAdapter()
         binding.moviesList.adapter = adapter
 
+        // Check selected to set action bar title
+        checkSelected(adapter.moviesSelected.value)
+
         // ListAdapter detects changes in items and updates the movies in RecyclerView
         movieViewModel.movies.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -84,25 +89,20 @@ class MoviesFragment : Fragment() {
         Else there are movies selected, show options menu and change title to amount selected
          */
         adapter.moviesSelected.observe(viewLifecycleOwner, Observer {
-            if (it.isNullOrEmpty())
-            {
-                setHasOptionsMenu(false)
+            checkSelected(it)
+        })
 
-                // Hide clear icon next to title
-                (activity as AppCompatActivity?)!!.supportActionBar?.
-                setDisplayHomeAsUpEnabled(false)
-
-                activity?.title = resources.getString(R.string.app_name)
-            }
-            else
-            {
-                setHasOptionsMenu(true)
-
-                // Show clear icon next to title
-                (activity as AppCompatActivity?)!!.supportActionBar?.
-                setDisplayHomeAsUpEnabled(true)
-
-                activity?.title = "${it.size} Selected"
+        // If RecyclerView is empty, show empty text
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                super.onChanged()
+                if (adapter.itemCount == 0) {
+                    binding.emptyText.visibility = View.VISIBLE
+                }
+                else
+                {
+                    binding.emptyText.visibility = View.GONE
+                }
             }
         })
 
@@ -110,6 +110,30 @@ class MoviesFragment : Fragment() {
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+
+    // Check selected list to determine if in select mode or not
+    private fun checkSelected(selected: MutableList<MovieEntity>?) {
+        if (selected.isNullOrEmpty())
+        {
+            setHasOptionsMenu(false)
+
+            // Hide clear icon next to title
+            (activity as AppCompatActivity?)!!.supportActionBar?.
+            setDisplayHomeAsUpEnabled(false)
+
+            activity?.title = resources.getString(R.string.app_name)
+        }
+        else
+        {
+            setHasOptionsMenu(true)
+
+            // Show clear icon next to title
+            (activity as AppCompatActivity?)!!.supportActionBar?.
+            setDisplayHomeAsUpEnabled(true)
+
+            activity?.title = "${selected.size} Selected"
+        }
     }
 
     // Add the delete menu and inflate the menu resource file
@@ -145,6 +169,12 @@ class MoviesFragment : Fragment() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    // Check for selected items onResume
+    override fun onResume() {
+        super.onResume()
+        checkSelected(adapter.moviesSelected.value)
     }
 
     // Delete selected movie items

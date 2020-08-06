@@ -32,4 +32,6 @@
     <string name="success_add_movie">Movie successfully added.</string>
     <string name="fail_to_update_movie">Could not update movie.</string>
     <string name="success_update_movie">Movie successfully updated.</string>
+    <string name="empty_shows_text">There are no shows saved.</string>
+    <string name="empty_movies_text">There are no movies saved.</string>
 </resources>

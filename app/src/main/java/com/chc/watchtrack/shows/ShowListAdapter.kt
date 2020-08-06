@@ -275,7 +275,8 @@ class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(Show
         }
 
         // Add item to selected shows and change background color
-        private fun addToSelected(showsSelected: MutableLiveData<MutableList<ShowEntity>?>, item: ShowEntity) {
+        private fun addToSelected(showsSelected: MutableLiveData<MutableList<ShowEntity>?>,
+                                  item: ShowEntity) {
             showsSelected.value!!.add(item)
             binding.cardView.setBackgroundColor(
                 ContextCompat.getColor(binding.root.context,
