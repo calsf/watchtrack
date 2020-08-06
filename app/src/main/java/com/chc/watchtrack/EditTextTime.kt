@@ -85,10 +85,12 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
             // Only add hour if current hours is less than MAX_TIME
             if (currHours < MAX_TIME) {
                 // Setting text will call afterTextChanged, pad length 3 to prevent reset to "00"
-                hours?.setText((currHours + 1).toString().padStart(3, '0'))
+                hours!!.editableText.replace(
+                    0, hours!!.editableText.length,
+                    (currHours + 1).toString().padStart(3, '0'))
             }
         } catch (nfe: NumberFormatException) {
-            hours?.setText("00")
+            hours!!.editableText.replace(0, hours!!.editableText.length, "00")
         }
     }
 
@@ -100,15 +102,17 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
             // If adding a minute makes minutes 60 or more, reset to 00 and add 1 hour
             // Else add one to minute text
             if (currMin + 1 >= TIME_UNIT) {
-                minutes?.setText("00")
+                minutes!!.editableText.replace(0, minutes!!.editableText.length, "00")
                 addHour()
             } else {
                 // Setting text will call afterTextChanged, pad length 3 to prevent reset to "00"
-                minutes?.setText((currMin + 1).toString().padStart(3, '0'))
+                minutes!!.editableText.replace(
+                    0, minutes!!.editableText.length,
+                    (currMin + 1).toString().padStart(3, '0'))
             }
 
         } catch (nfe: NumberFormatException) {
-            minutes?.setText("00")
+            minutes!!.editableText.replace(0, minutes!!.editableText.length, "00")
         }
     }
 
@@ -137,19 +141,19 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
                         removeTextChangedListener(this)
 
                         /*
-                    Cursor will always be at the end, show only the last 2 characters
-                    This will give behaviour of inserting values from right to left
-                     */
+                        Cursor will always be at the end, show only the last 2 characters
+                        This will give behaviour of inserting values from right to left
+                         */
                         if (s.length > 2) {
-                            setText(s.toString().substring(s.length - 2, s.length))
+                            s.replace(0, s.length, (s.toString().substring(s.length - 2, s.length)))
                         } else {
-                            setText("00")
+                            s.replace(0, s.length, "00")
                         }
 
                         /*
-                    If seconds or minutes EditTextTime text goes over TIME_UNIT, carry over 1 time
-                    unit and set the current EditTextTime text to the remaining time
-                     */
+                        If seconds or minutes EditTextTime text goes over TIME_UNIT, carry over 1 time
+                        unit and set the current EditTextTime text to the remaining time
+                         */
                         try {
                             val num = text.toString().toInt()
                             if (num >= TIME_UNIT) {
@@ -160,18 +164,20 @@ class EditTextTime : androidx.appcompat.widget.AppCompatEditText {
                                 when (this@EditTextTime) {
                                     minutes -> {
                                         addHour()
-                                        minutes!!.setText(diff.toString().padStart
-                                            (2, '0'))
+                                        minutes!!.editableText.replace(
+                                            0, minutes!!.editableText.length,
+                                            (diff.toString().padStart(2, '0')))
                                     }
                                     seconds -> {
                                         addMinute()
-                                        seconds!!.setText(diff.toString().padStart
-                                            (2, '0'))
+                                        seconds!!.editableText.replace(
+                                            0, seconds!!.editableText.length,
+                                            (diff.toString().padStart(2, '0')))
                                     }
                                 }
                             }
                         } catch (nfe: NumberFormatException) {
-                            setText("00")
+                            s.replace(0, s.length, "00")
                         }
 
                         // Set selection to end of current text

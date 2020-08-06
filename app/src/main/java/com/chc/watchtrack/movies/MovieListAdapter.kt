@@ -1,6 +1,7 @@
 package com.chc.watchtrack.movies
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -189,6 +190,7 @@ class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(M
             binding.expandableView.visibility = View.GONE
             binding.line.visibility = View.VISIBLE
             binding.expandedLine.visibility = View.GONE
+            focusView()
         }
 
         // Show expandable view and change expand button image
@@ -196,6 +198,17 @@ class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(M
             binding.expandableView.visibility = View.VISIBLE
             binding.line.visibility = View.GONE
             binding.expandedLine.visibility = View.VISIBLE
+            focusView()
+        }
+
+        // Focus on view when clicked on
+        private fun focusView() {
+            binding.cardView.post {
+                binding.cardView.parent.requestChildFocus(
+                    binding.cardView,
+                    binding.cardView
+                )
+            }
         }
 
         // Remove item from selected movies and change background color

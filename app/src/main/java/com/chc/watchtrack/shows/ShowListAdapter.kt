@@ -1,6 +1,8 @@
 package com.chc.watchtrack.shows
 
+import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chc.watchtrack.R
 import com.chc.watchtrack.database.ShowEntity
 import com.chc.watchtrack.databinding.ShowItemBinding
-import java.lang.NumberFormatException
 
 const val MAX_NUM_INPUT = 1000
 
@@ -244,6 +245,7 @@ class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(Show
             binding.expandableView.visibility = View.GONE
             binding.line.visibility = View.VISIBLE
             binding.expandedLine.visibility = View.GONE
+            focusView()
         }
 
         // Show expandable view and change expand button image
@@ -251,6 +253,17 @@ class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(Show
             binding.expandableView.visibility = View.VISIBLE
             binding.line.visibility = View.GONE
             binding.expandedLine.visibility = View.VISIBLE
+            focusView()
+        }
+
+        // Focus on view when clicked on
+        private fun focusView() {
+            binding.cardView.post {
+                binding.cardView.parent.requestChildFocus(
+                    binding.cardView,
+                    binding.cardView
+                )
+            }
         }
 
         // Remove item from selected shows and change background color
