@@ -5,14 +5,191 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
         tools:context=".movies.AddMovieFragment">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/title_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/title"
+            android:textAlignment="viewStart"
+            android:textColor="@color/editField"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/title_input"
+            app:layout_constraintStart_toStartOf="@+id/title_input"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/title_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="16"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            android:textAlignment="viewStart"
+            android:textColor="@color/defaultText"
+            android:textSize="18sp"
+            android:maxLength="50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_label"
+            android:importantForAutofill="no" />
+
+        <com.chc.watchtrack.EditTextTime
+            android:id="@+id/hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:ems="2"
+            android:fontFamily="@font/roboto"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="3"
+            android:text="@string/default_time"
+            android:textAlignment="center"
+            android:textColor="@color/defaultText"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/colon1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/time_label" />
+
+        <TextView
+            android:id="@+id/colon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/colon"
+            android:textColor="@color/editField"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/minutes"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/hours"
+            app:layout_constraintTop_toBottomOf="@+id/time_label" />
+
+        <com.chc.watchtrack.EditTextTime
+            android:id="@+id/minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:ems="2"
+            android:fontFamily="@font/roboto"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="3"
+            android:text="@string/default_time"
+            android:textAlignment="center"
+            android:textColor="@color/defaultText"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/colon2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/colon1"
+            app:layout_constraintTop_toBottomOf="@+id/time_label" />
+
+        <TextView
+            android:id="@+id/colon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/colon"
+            android:textColor="@color/editField"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/seconds"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/minutes"
+            app:layout_constraintTop_toBottomOf="@+id/time_label" />
+
+        <com.chc.watchtrack.EditTextTime
+            android:id="@+id/seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:ems="2"
+            android:fontFamily="@font/roboto"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="3"
+            android:text="@string/default_time"
+            android:textAlignment="center"
+            android:textColor="@color/defaultText"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/colon2"
+            app:layout_constraintTop_toBottomOf="@+id/time_label" />
+
+
+        <TextView
+            android:id="@+id/time_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto"
+            android:text="@string/time_label"
+            android:textColor="@color/editField"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/hours"
+            app:layout_constraintTop_toBottomOf="@+id/title_input" />
+
+        <TextView
+            android:id="@+id/hours_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/hours_label"
+            android:textColor="@color/editField"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/colon1"
+            app:layout_constraintStart_toStartOf="@+id/hours"
+            app:layout_constraintTop_toBottomOf="@+id/hours" />
+
+        <TextView
+            android:id="@+id/minutes_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/minutes_label"
+            android:textColor="@color/editField"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/minutes"
+            app:layout_constraintStart_toEndOf="@+id/colon1"
+            app:layout_constraintTop_toBottomOf="@+id/minutes" />
+
+        <TextView
+            android:id="@+id/seconds_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/seconds_label"
+            android:textColor="@color/editField"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/seconds"
+            app:layout_constraintStart_toEndOf="@+id/colon2"
+            app:layout_constraintTop_toBottomOf="@+id/seconds" />
+
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/add_movie_btn"
+            android:textColor="@color/design_default_color_background"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/minutes_label"
+            app:layout_constraintVertical_bias=".2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

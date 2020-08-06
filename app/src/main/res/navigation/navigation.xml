@@ -26,5 +26,9 @@
     <fragment
         android:id="@+id/addMovieFragment"
         android:name="com.chc.watchtrack.movies.AddMovieFragment"
-        tools:layout="@layout/add_movie_fragment" />
+        tools:layout="@layout/add_movie_fragment" >
+        <action
+            android:id="@+id/action_addMovieFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

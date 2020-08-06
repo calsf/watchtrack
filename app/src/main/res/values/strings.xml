@@ -26,4 +26,10 @@
     <string name="confirm_delete_text">Selected items will be deleted</string>
     <string name="cancel_label">Cancel</string>
     <string name="select_all_label">Select All</string>
+    <string name="add_movie_btn">Add Movie</string>
+    <string name="time_label">TIME</string>
+    <string name="fail_to_add_movie">Could not add movie.</string>
+    <string name="success_add_movie">Movie successfully added.</string>
+    <string name="fail_to_update_movie">Could not update movie.</string>
+    <string name="success_update_movie">Movie successfully updated.</string>
 </resources>

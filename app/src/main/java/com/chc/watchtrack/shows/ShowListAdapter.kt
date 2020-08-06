@@ -1,7 +1,6 @@
 package com.chc.watchtrack.shows
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.chc.watchtrack.R
-import com.chc.watchtrack.database.Show
+import com.chc.watchtrack.database.ShowEntity
 import com.chc.watchtrack.databinding.ShowItemBinding
 import java.lang.NumberFormatException
 
 const val MAX_NUM_INPUT = 1000
 
 // ListAdapter will use ShowDiffCallback to determine what Shows have changed with ViewHolder
-class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCallback())
+class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(ShowDiffCallback())
 {
     var selectedAll = false
 
@@ -33,16 +32,16 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
     }
 
     // When changed, ShowFragment will update the item in the database
-    private var _showUpdate = MutableLiveData<Show?>()
-    val showUpdate: LiveData<Show?> get() = _showUpdate
+    private var _showUpdate = MutableLiveData<ShowEntity?>()
+    val showEntityUpdate: LiveData<ShowEntity?> get() = _showUpdate
     // Reset _showUpdate value after changing
     fun resetShowUpdate() {
         _showUpdate.value = null
     }
 
     // When changed, ShowsFragment will enable actions to do something with the selected shows
-    private var _showsSelected = MutableLiveData<MutableList<Show>?>()
-    val showsSelected: LiveData<MutableList<Show>?> get() = _showsSelected
+    private var _showsSelected = MutableLiveData<MutableList<ShowEntity>?>()
+    val showsSelected: LiveData<MutableList<ShowEntity>?> get() = _showsSelected
     // Clear _showsSelected list
     fun resetShowsSelected() {
         _showsSelected.value!!.clear()
@@ -63,7 +62,7 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
 
     class ViewHolder private constructor
         (val binding: ShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Show, adapter: ShowListAdapter) {
+        fun bind(item: ShowEntity, adapter: ShowListAdapter) {
             // Reset background color if not selected
             if (!adapter._showsSelected.value!!.contains(item))
             {
@@ -256,14 +255,14 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
 
         // Remove item from selected shows and change background color
         private fun removeFromSelected
-                    (showsSelected: MutableLiveData<MutableList<Show>?>, item: Show)
+                    (showsSelected: MutableLiveData<MutableList<ShowEntity>?>, item: ShowEntity)
         {
             showsSelected.value!!.remove(item)
             binding.cardView.setBackgroundColor(Color.WHITE)
         }
 
         // Add item to selected shows and change background color
-        private fun addToSelected(showsSelected: MutableLiveData<MutableList<Show>?>, item: Show) {
+        private fun addToSelected(showsSelected: MutableLiveData<MutableList<ShowEntity>?>, item: ShowEntity) {
             showsSelected.value!!.add(item)
             binding.cardView.setBackgroundColor(
                 ContextCompat.getColor(binding.root.context,
@@ -286,14 +285,14 @@ class ShowListAdapter : ListAdapter<Show, ShowListAdapter.ViewHolder>(ShowDiffCa
 }
 
 // DiffUtil
-class ShowDiffCallback : DiffUtil.ItemCallback<Show>() {
+class ShowDiffCallback : DiffUtil.ItemCallback<ShowEntity>() {
     // For detecting if an item was added, removed, or moved
-    override fun areItemsTheSame(oldItem: Show, newItem: Show): Boolean {
+    override fun areItemsTheSame(oldItem: ShowEntity, newItem: ShowEntity): Boolean {
         return oldItem.showId == newItem.showId
     }
 
     //Detect differences between oldItem and newItem,
-    override fun areContentsTheSame(oldItem: Show, newItem: Show): Boolean {
+    override fun areContentsTheSame(oldItem: ShowEntity, newItem: ShowEntity): Boolean {
         return oldItem == newItem
     }
 }

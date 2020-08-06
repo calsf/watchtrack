@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chc.watchtrack.DeletePopup
 import com.chc.watchtrack.R
-import com.chc.watchtrack.database.Show
+import com.chc.watchtrack.database.ShowEntity
 import com.chc.watchtrack.database.WatchDatabase
 import com.chc.watchtrack.databinding.ShowsFragmentBinding
 
@@ -23,6 +23,9 @@ class ShowsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        // Set action bar title
+        activity?.title = resources.getString(R.string.app_name)
+
         // Initialize toasts for successful and unsuccessful show update
         failToast = Toast.makeText(activity, R.string.fail_to_update_show, Toast.LENGTH_SHORT)
         successToast = Toast.makeText(activity, R.string.success_update_show, Toast.LENGTH_LONG)
@@ -71,7 +74,7 @@ class ShowsFragment : Fragment() {
         })
 
         // Update show when item changes
-        adapter.showUpdate.observe(viewLifecycleOwner, Observer {
+        adapter.showEntityUpdate.observe(viewLifecycleOwner, Observer {
             it?.let {
                 showViewModel.updateShow(it)
             }
@@ -90,7 +93,7 @@ class ShowsFragment : Fragment() {
                 (activity as AppCompatActivity?)!!.supportActionBar?.
                 setDisplayHomeAsUpEnabled(false)
 
-                activity?.setTitle(R.string.app_name)
+                activity?.title = resources.getString(R.string.app_name)
             }
             else
             {
@@ -147,7 +150,7 @@ class ShowsFragment : Fragment() {
 
     // Delete selected show items
     private fun deleteSelected () {
-        val list: MutableList<Show> = ArrayList()
+        val list: MutableList<ShowEntity> = ArrayList()
         list.addAll(adapter.showsSelected.value!!)
         showViewModel.deleteShows(list)
 

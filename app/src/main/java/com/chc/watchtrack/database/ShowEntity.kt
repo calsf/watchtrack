@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "show_table")
-data class Show (
+data class ShowEntity (
     @PrimaryKey(autoGenerate = true)
     var showId: Long = 0L,
 

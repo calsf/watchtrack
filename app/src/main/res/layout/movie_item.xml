@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="show"
-            type="com.chc.watchtrack.database.ShowEntity"/>
+            name="movie"
+            type="com.chc.watchtrack.database.MovieEntity"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +29,7 @@
 
 
                 <TextView
-                    android:id="@+id/show_title"
+                    android:id="@+id/movie_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -44,66 +44,8 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:title="@{show}"
+                    app:title="@{movie}"
                     tools:text="Breaking Bad" />
-
-                <TextView
-                    android:id="@+id/season_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:text="@string/season_text"
-                    android:textColor="@color/defaultText"
-                    app:layout_constraintEnd_toStartOf="@+id/season_num"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="@+id/show_title"
-                    app:layout_constraintTop_toBottomOf="@+id/show_title" />
-
-                <TextView
-                    android:id="@+id/season_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLength="3"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:textColor="@color/defaultText"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toEndOf="@+id/season_label"
-                    app:layout_constraintTop_toTopOf="@+id/season_label"
-                    app:season="@{show}"
-                    tools:text="222" />
-
-                <TextView
-                    android:id="@+id/episode_num_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:text="@string/episode_number_text"
-                    android:textColor="@color/defaultText"
-                    app:layout_constraintEnd_toStartOf="@+id/episode_num"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="@+id/show_title"
-                    app:layout_constraintTop_toBottomOf="@+id/season_label" />
-
-                <TextView
-                    android:id="@+id/episode_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLength="3"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:textColor="@color/defaultText"
-                    app:episode="@{show}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toEndOf="@+id/episode_num_label"
-                    app:layout_constraintTop_toBottomOf="@+id/season_num"
-                    tools:text="222" />
 
                 <TextView
                     android:id="@+id/hours_display"
@@ -118,13 +60,13 @@
                     android:textAlignment="center"
                     android:textColor="@color/defaultText"
                     android:textSize="14sp"
-                    app:hours="@{show}"
+                    app:hours="@{movie}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/colon1"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="@+id/show_title"
-                    app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+                    app:layout_constraintStart_toStartOf="@+id/movie_title"
+                    app:layout_constraintTop_toBottomOf="@+id/movie_title"
                     app:layout_constraintVertical_bias="0" />
 
                 <TextView
@@ -140,7 +82,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/minutes_display"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/hours_display"
-                    app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+                    app:layout_constraintTop_toBottomOf="@+id/movie_title"
                     app:layout_constraintVertical_bias="0" />
 
                 <TextView
@@ -160,9 +102,9 @@
                     app:layout_constraintEnd_toStartOf="@+id/colon2"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/colon1"
-                    app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+                    app:layout_constraintTop_toBottomOf="@+id/movie_title"
                     app:layout_constraintVertical_bias="0"
-                    app:minutes="@{show}" />
+                    app:minutes="@{movie}" />
 
                 <TextView
                     android:id="@+id/colon2"
@@ -177,7 +119,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/seconds_display"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/minutes_display"
-                    app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+                    app:layout_constraintTop_toBottomOf="@+id/movie_title"
                     app:layout_constraintVertical_bias="0" />
 
                 <TextView
@@ -197,9 +139,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/colon2"
-                    app:layout_constraintTop_toBottomOf="@+id/episode_num_label"
+                    app:layout_constraintTop_toBottomOf="@+id/movie_title"
                     app:layout_constraintVertical_bias="0"
-                    app:seconds="@{show}" />
+                    app:seconds="@{movie}" />
 
                 <!-- EXPANDABLE VIEW FOR EDITING THIS SHOW ITEM -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -216,77 +158,6 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/hours_display">
-
-                    <TextView
-                        android:id="@+id/expanded_season_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="32dp"
-                        android:fontFamily="@font/roboto"
-                        android:text="@string/season_text"
-                        android:textColor="@color/editField"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toStartOf="@+id/expanded_episode_num_label"
-                        app:layout_constraintHorizontal_bias=".5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.chc.watchtrack.EditTextSetEnd
-                        android:id="@+id/expand_season_number"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/box"
-                        android:ems="2"
-                        android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:padding="8dp"
-                        android:text="@string/default_num"
-                        android:textAlignment="center"
-                        android:textColor="@color/defaultText"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toTopOf="@+id/hours"
-                        app:layout_constraintEnd_toEndOf="@+id/expanded_season_label"
-                        app:layout_constraintStart_toStartOf="@+id/expanded_season_label"
-                        app:layout_constraintTop_toBottomOf="@+id/expanded_season_label" />
-
-                    <TextView
-                        android:id="@+id/expanded_episode_num_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/roboto"
-                        android:text="@string/episode_number_text"
-                        android:textColor="@color/editField"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias=".5"
-                        app:layout_constraintStart_toEndOf="@+id/expanded_season_label"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.chc.watchtrack.EditTextSetEnd
-                        android:id="@+id/expand_episode_number"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/box"
-                        android:cursorVisible="true"
-                        android:ems="3"
-                        android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:padding="8dp"
-                        android:text="@string/default_num"
-                        android:textAlignment="center"
-                        android:textColor="@color/defaultText"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
-                        app:layout_constraintEnd_toEndOf="@+id/expanded_episode_num_label"
-                        app:layout_constraintStart_toStartOf="@+id/expanded_episode_num_label"
-                        app:layout_constraintTop_toBottomOf="@+id/expanded_episode_num_label" />
 
                     <!-- TIME INPUT -->
                     <com.chc.watchtrack.EditTextTime
@@ -311,7 +182,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
+                        app:layout_constraintTop_toTopOf="@id/expandable_view" />
 
                     <TextView
                         android:id="@+id/expand_colon1"
@@ -326,7 +197,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/minutes"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/hours"
-                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
+                        app:layout_constraintTop_toTopOf="@id/expandable_view" />
 
                     <com.chc.watchtrack.EditTextTime
                         android:id="@+id/minutes"
@@ -348,7 +219,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/expand_colon2"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon1"
-                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
+                        app:layout_constraintTop_toTopOf="@id/expandable_view" />
 
                     <TextView
                         android:id="@+id/expand_colon2"
@@ -363,7 +234,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/seconds"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/minutes"
-                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
+                        app:layout_constraintTop_toTopOf="@id/expandable_view" />
 
                     <com.chc.watchtrack.EditTextTime
                         android:id="@+id/seconds"
@@ -386,7 +257,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon2"
-                        app:layout_constraintTop_toBottomOf="@+id/expand_season_number" />
+                        app:layout_constraintTop_toTopOf="@id/expandable_view" />
 
                     <TextView
                         android:id="@+id/hours_label"
@@ -426,50 +297,6 @@
                         app:layout_constraintBottom_toTopOf="@+id/update_btn"
                         app:layout_constraintEnd_toEndOf="@+id/seconds"
                         app:layout_constraintStart_toEndOf="@+id/expand_colon2" />
-
-                    <ImageView
-                        android:id="@+id/add_season_btn"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/add_season_desc"
-                        android:padding="8dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
-                        app:layout_constraintStart_toEndOf="@+id/expand_season_number"
-                        app:layout_constraintTop_toTopOf="@+id/expand_season_number"
-                        app:srcCompat="@drawable/add_box" />
-
-                    <ImageView
-                        android:id="@+id/subtract_season_btn"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/subtract_season_desc"
-                        android:padding="8dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/expand_season_number"
-                        app:layout_constraintEnd_toStartOf="@+id/expand_season_number"
-                        app:layout_constraintTop_toTopOf="@+id/expand_season_number"
-                        app:srcCompat="@drawable/subtract_box" />
-
-                    <ImageView
-                        android:id="@+id/add_episode_btn"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/add_episode_desc"
-                        android:padding="8dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/expand_episode_number"
-                        app:layout_constraintStart_toEndOf="@+id/expand_episode_number"
-                        app:layout_constraintTop_toTopOf="@+id/expand_episode_number"
-                        app:srcCompat="@drawable/add_box" />
-
-                    <ImageView
-                        android:id="@+id/subtract_episode_btn"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/subtract_episode_desc"
-                        android:padding="8dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/expand_episode_number"
-                        app:layout_constraintEnd_toStartOf="@+id/expand_episode_number"
-                        app:layout_constraintTop_toTopOf="@+id/expand_episode_number"
-                        app:srcCompat="@drawable/subtract_box" />
 
                     <Button
                         android:id="@+id/update_btn"

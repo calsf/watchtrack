@@ -1,9 +1,8 @@
 package com.chc.watchtrack.shows
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import com.chc.watchtrack.database.Show
+import com.chc.watchtrack.database.ShowEntity
 import com.chc.watchtrack.database.ShowDatabaseDao
 import kotlinx.coroutines.*
 
@@ -23,23 +22,23 @@ class ShowViewModel (
     val shows = database.getAllShows()
 
     // Add new show coroutine
-    private suspend fun insert(show: Show) {
+    private suspend fun insert(showEntity: ShowEntity) {
         withContext(Dispatchers.IO) {
-            database.insert(show)
+            database.insert(showEntity)
         }
     }
 
     // Update show coroutine
-    private suspend fun update(show: Show) {
+    private suspend fun update(showEntity: ShowEntity) {
         withContext(Dispatchers.IO) {
-            database.update(show)
+            database.update(showEntity)
         }
     }
 
     // Delete all shows in given list
-    private suspend fun delete(shows: List<Show>?){
+    private suspend fun delete(showEntities: List<ShowEntity>?){
         withContext(Dispatchers.IO) {
-            shows?.forEach {
+            showEntities?.forEach {
                 database.delete(it)
             }
         }
@@ -47,7 +46,7 @@ class ShowViewModel (
 
     // For onClick, add new show with given data
     fun onAdd(title: String, season: Int, episode: Int, hours: Int, minutes: Int, seconds: Int) {
-        val newShow = Show()
+        val newShow = ShowEntity()
         uiScope.launch {
             // Create new show and insert into database
             newShow.title = title
@@ -61,17 +60,17 @@ class ShowViewModel (
     }
 
     // Update show in ShowsFragment when update status is true
-    fun updateShow(show: Show)
+    fun updateShow(showEntity: ShowEntity)
     {
         uiScope.launch {
-            update(show)
+            update(showEntity)
         }
     }
 
     // Delete list of shows
-    fun deleteShows(shows: List<Show>?){
+    fun deleteShows(showEntities: List<ShowEntity>?){
         uiScope.launch {
-            delete(shows)
+            delete(showEntities)
         }
     }
 
