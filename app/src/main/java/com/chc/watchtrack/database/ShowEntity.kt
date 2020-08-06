@@ -3,6 +3,7 @@ package com.chc.watchtrack.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "show_table")
 data class ShowEntity (
@@ -25,5 +26,8 @@ data class ShowEntity (
     var season: Int = -1,
 
     @ColumnInfo(name = "episode")
-    var episode: Int = -1
+    var episode: Int = -1,
+
+    @ColumnInfo(name = "last_updated")
+    var lastUpdated: String = Date().toString()
 )

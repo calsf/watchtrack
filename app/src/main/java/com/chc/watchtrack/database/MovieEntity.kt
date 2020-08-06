@@ -3,6 +3,7 @@ package com.chc.watchtrack.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "movie_table")
 data class MovieEntity (
@@ -19,5 +20,8 @@ data class MovieEntity (
     var minutes: Int = 0,
 
     @ColumnInfo(name = "seconds")
-    var seconds: Int = 0
+    var seconds: Int = 0,
+
+    @ColumnInfo(name = "last_updated")
+    var lastUpdated: String = Date().toString()
 )

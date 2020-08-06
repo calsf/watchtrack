@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.chc.watchtrack.database.ShowEntity
 import com.chc.watchtrack.database.ShowDatabaseDao
 import kotlinx.coroutines.*
+import java.util.*
 
 class ShowViewModel (
     dataSource: ShowDatabaseDao, application: Application
@@ -31,6 +32,9 @@ class ShowViewModel (
     // Update show coroutine
     private suspend fun update(showEntity: ShowEntity) {
         withContext(Dispatchers.IO) {
+            // Update last updated time for this item
+            showEntity.lastUpdated = Date().toString()
+
             database.update(showEntity)
         }
     }

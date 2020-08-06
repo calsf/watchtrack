@@ -27,7 +27,7 @@ interface MovieDatabaseDao
     @Query("SELECT * FROM movie_table ORDER BY movieId DESC LIMIT 1")
     fun getMovie(): MovieEntity?
 
-    // Return all columns from the table in descending order
-    @Query("SELECT * FROM movie_table ORDER BY movieId DESC")
+    // Return all columns from the table in descending order of last_updated
+    @Query("SELECT * FROM movie_table ORDER BY last_updated DESC")
     fun getAllMovies(): LiveData<List<MovieEntity>>
 }

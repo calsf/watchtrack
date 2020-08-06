@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.chc.watchtrack.database.MovieDatabaseDao
 import com.chc.watchtrack.database.MovieEntity
 import kotlinx.coroutines.*
+import java.util.*
 
 class MovieViewModel (
     dataSource: MovieDatabaseDao, application: Application
@@ -31,6 +32,9 @@ class MovieViewModel (
     // Update movie coroutine
     private suspend fun update(movieEntity: MovieEntity) {
         withContext(Dispatchers.IO) {
+            // Update last updated time for this item
+            movieEntity.lastUpdated = Date().toString()
+
             database.update(movieEntity)
         }
     }

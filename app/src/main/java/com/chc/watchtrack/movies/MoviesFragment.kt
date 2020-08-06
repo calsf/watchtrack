@@ -1,6 +1,7 @@
 package com.chc.watchtrack.movies
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -60,6 +61,15 @@ class MoviesFragment : Fragment() {
         movieViewModel.movies.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+
+                // Check if the list of movies is empty and display text if empty
+                if (it.isEmpty()) {
+                    binding.emptyText.visibility = View.VISIBLE
+                }
+                else
+                {
+                    binding.emptyText.visibility = View.GONE
+                }
             }
         })
 
@@ -90,20 +100,6 @@ class MoviesFragment : Fragment() {
          */
         adapter.moviesSelected.observe(viewLifecycleOwner, Observer {
             checkSelected(it)
-        })
-
-        // If RecyclerView is empty, show empty text
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                super.onChanged()
-                if (adapter.itemCount == 0) {
-                    binding.emptyText.visibility = View.VISIBLE
-                }
-                else
-                {
-                    binding.emptyText.visibility = View.GONE
-                }
-            }
         })
 
         // Set lifecycle owner to observe LiveData updates

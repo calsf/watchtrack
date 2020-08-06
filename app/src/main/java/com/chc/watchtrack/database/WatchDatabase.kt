@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ShowEntity::class, MovieEntity::class], version = 2, exportSchema = false)
+@Database(entities = [ShowEntity::class, MovieEntity::class], version = 4, exportSchema = false)
 abstract class WatchDatabase: RoomDatabase() {
     // Data access objects
     abstract val showDatabaseDao: ShowDatabaseDao

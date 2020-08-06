@@ -79,7 +79,7 @@ class AddShowFragment : Fragment() {
 
                     // Show successfully added toast and go back
                     successToast.show()
-                    Navigation.findNavController(it).navigate(R.id.action_addShowFragment_to_homeFragment)
+                    Navigation.findNavController(it).navigateUp()
                 }
             }
             catch(nfe: NumberFormatException)

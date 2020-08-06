@@ -58,6 +58,15 @@ class ShowsFragment : Fragment() {
         showViewModel.shows.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+
+                // Check if the list of shows is empty and display text if empty
+                if (it.isEmpty()) {
+                    binding.emptyText.visibility = View.VISIBLE
+                }
+                else
+                {
+                    binding.emptyText.visibility = View.GONE
+                }
             }
         })
 
@@ -89,20 +98,6 @@ class ShowsFragment : Fragment() {
         adapter.showsSelected.observe(viewLifecycleOwner, Observer {
             it?.let {
                 checkSelected(it)
-            }
-        })
-
-        // If RecyclerView is empty, show empty text
-        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
-            override fun onChanged() {
-                super.onChanged()
-                if (adapter.itemCount == 0) {
-                    binding.emptyText.visibility = View.VISIBLE
-                }
-                else
-                {
-                    binding.emptyText.visibility = View.GONE
-                }
             }
         })
 

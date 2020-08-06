@@ -27,7 +27,7 @@ interface ShowDatabaseDao
     @Query ("SELECT * FROM show_table ORDER BY showId DESC LIMIT 1")
     fun getShow(): ShowEntity?
 
-    // Return all columns from the table in descending order
-    @Query ("SELECT * FROM show_table ORDER BY showId DESC")
+    // Return all columns from the table in descending order of last_updated
+    @Query ("SELECT * FROM show_table ORDER BY last_updated DESC")
     fun getAllShows(): LiveData<List<ShowEntity>>
 }
