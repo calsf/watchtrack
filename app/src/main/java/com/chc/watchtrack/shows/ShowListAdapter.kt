@@ -1,8 +1,6 @@
 package com.chc.watchtrack.shows
 
-import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +20,8 @@ const val MAX_NUM_INPUT = 1000
 // ListAdapter will use ShowDiffCallback to determine what Shows have changed with ViewHolder
 class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(ShowDiffCallback())
 {
-    var selectedAll = false
+    lateinit var selectedItems: MutableList<ShowEntity?>
+    var selectedMode = false
 
     // When changed, ShowFragment will display a success or fail toast depending on true or false
     private var _updateStatus = MutableLiveData<Boolean?>()
@@ -40,16 +39,9 @@ class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(Show
         _showUpdate.value = null
     }
 
-    // When changed, ShowsFragment will enable actions to do something with the selected shows
-    private var _showsSelected = MutableLiveData<MutableList<ShowEntity>?>()
-    val showsSelected: LiveData<MutableList<ShowEntity>?> get() = _showsSelected
-    // Clear _showsSelected list
-    fun resetShowsSelected() {
-        _showsSelected.value!!.clear()
-
-        // Update shows selected value
-        _showsSelected.value = _showsSelected.value
-    }
+    // When changed, ShowFragment will add or remove from selected
+    private var _selectedItem = MutableLiveData<ViewHolder?>()
+    val selectedItem: LiveData<ViewHolder?> get() = _selectedItem
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -57,15 +49,21 @@ class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(Show
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        _showsSelected.value = ArrayList()
         return ViewHolder.from(parent)
     }
 
     class ViewHolder private constructor
         (val binding: ShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ShowEntity, adapter: ShowListAdapter) {
-            // Reset background color if not selected
-            if (!adapter._showsSelected.value!!.contains(item))
+            // Check if current item is selected and set view background accordingly
+            if (adapter.selectedItems.contains(item))
+            {
+                binding.cardView.setBackgroundColor(
+                    ContextCompat.getColor(binding.root.context,
+                        R.color.selectedItem
+                    ))
+            }
+            else
             {
                 binding.cardView.setBackgroundColor(Color.WHITE)
             }
@@ -88,46 +86,20 @@ class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(Show
             // When click and held on cardView, select the item and add to list of selected
             binding.cardView.isClickable = true
             binding.cardView.setOnLongClickListener {
-                // Remove from list if already selected, else add to list
-                if (adapter._showsSelected.value!!.contains(item))
-                {
-                    removeFromSelected(adapter._showsSelected, item)
-                }
-                else
-                {
-                    // Hide expandable view if it is showing upon selecting
-                    if (binding.expandableView.visibility == View.VISIBLE)
-                    {
-                        hideExpandableView()
-                    }
-
-                    addToSelected(adapter._showsSelected, item)
-                }
-
-                // Update shows selected value
-                adapter._showsSelected.value = adapter._showsSelected.value
+                adapter._selectedItem.value = this
 
                 true
             }
 
             /*
-            If selectedShows list has at least 1 item, clicking on item will select/deselect item
+            If selectedShows list has at least 1 item, then we are in select mode
+            In selectedMode, clicking on item will select/deselect item
             Else, clicking on item will show or hide expandable view to allow for quick edit
              */
             binding.cardView.setOnClickListener {
                 //
-                if (adapter._showsSelected.value!!.size > 0) {
-                    if (adapter._showsSelected.value!!.contains(item))
-                    {
-                        removeFromSelected(adapter._showsSelected, item)
-                    }
-                    else
-                    {
-                        addToSelected(adapter._showsSelected, item)
-                    }
-
-                    // Update shows selected value
-                    adapter._showsSelected.value = adapter._showsSelected.value
+                if (adapter.selectedMode) {
+                    adapter._selectedItem.value = this
                 }
                 else
                 {
@@ -184,24 +156,6 @@ class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(Show
                     adapter._updateStatus.value = false
                     adapter.resetUpdateStatus()
                 }
-            }
-
-            // If all items are to be selected, check if this item is selected and add if not
-            if (adapter.selectedAll)
-            {
-                if (!adapter._showsSelected.value!!.contains(item))
-                {
-                    // Hide expandable view if it is showing upon selecting
-                    if (binding.expandableView.visibility == View.VISIBLE)
-                    {
-                        hideExpandableView()
-                    }
-
-                    addToSelected(adapter._showsSelected, item)
-                }
-
-                // Update shows selected value
-                adapter._showsSelected.value = adapter._showsSelected.value
             }
 
             // Execute any pending bindings
@@ -264,24 +218,6 @@ class ShowListAdapter : ListAdapter<ShowEntity, ShowListAdapter.ViewHolder>(Show
                     binding.cardView
                 )
             }
-        }
-
-        // Remove item from selected shows and change background color
-        private fun removeFromSelected
-                    (showsSelected: MutableLiveData<MutableList<ShowEntity>?>, item: ShowEntity)
-        {
-            showsSelected.value!!.remove(item)
-            binding.cardView.setBackgroundColor(Color.WHITE)
-        }
-
-        // Add item to selected shows and change background color
-        private fun addToSelected(showsSelected: MutableLiveData<MutableList<ShowEntity>?>,
-                                  item: ShowEntity) {
-            showsSelected.value!!.add(item)
-            binding.cardView.setBackgroundColor(
-                ContextCompat.getColor(binding.root.context,
-                    R.color.selectedItem
-                ))
         }
 
         companion object {

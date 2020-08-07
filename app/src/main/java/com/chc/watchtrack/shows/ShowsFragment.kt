@@ -1,15 +1,14 @@
 package com.chc.watchtrack.shows
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.chc.watchtrack.DeletePopup
 import com.chc.watchtrack.R
 import com.chc.watchtrack.database.ShowEntity
@@ -51,8 +50,18 @@ class ShowsFragment : Fragment() {
         adapter = ShowListAdapter()
         binding.showsList.adapter = adapter
 
+        // Init adapter selectedItems
+        adapter.selectedItems = ArrayList()
+
+        // Init showsSelected
+        showViewModel.initShowsSelected()
+
         // Check selected to set action bar title
-        checkSelected(adapter.showsSelected.value)
+        checkSelected(showViewModel.showsSelected.value)
+
+        // Set adapter's selected items to reference view model showsSelected
+        adapter.selectedItems =
+            showViewModel.showsSelected.value as MutableList<ShowEntity?>
 
         // ListAdapter detects changes in items and updates the shows in RecyclerView
         showViewModel.shows.observe(viewLifecycleOwner, Observer {
@@ -91,11 +100,18 @@ class ShowsFragment : Fragment() {
             }
         })
 
+        // Add or remove selected item to selected in viewModel
+        adapter.selectedItem.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                showViewModel.addOrRemoveSelected(it)
+            }
+        })
+
         /*
         If no shows are selected, hide options menu and change title to app name
         Else there are shows selected, show options menu and change title to amount selected
          */
-        adapter.showsSelected.observe(viewLifecycleOwner, Observer {
+        showViewModel.showsSelected.observe(viewLifecycleOwner, Observer {
             it?.let {
                 checkSelected(it)
             }
@@ -118,6 +134,8 @@ class ShowsFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
 
             activity?.title = resources.getString(R.string.app_name)
+
+            adapter.selectedMode = false
         }
         else
         {
@@ -128,6 +146,8 @@ class ShowsFragment : Fragment() {
             setDisplayHomeAsUpEnabled(true)
 
             activity?.title = "${selected.size} Selected"
+
+            adapter.selectedMode = true
         }
     }
 
@@ -153,12 +173,16 @@ class ShowsFragment : Fragment() {
                 deletePopup.showDeletePopup(requireActivity()) { deleteSelected() }
             }
             R.id.select_all -> {
-                adapter.selectedAll = true
+                showViewModel.shows.value?.forEach {
+                    if (!showViewModel.showsSelected.value!!.contains(it)) {
+                        showViewModel.showsSelected.value?.add(it)
+                    }
+                }
+                showViewModel.showsSelected = showViewModel.showsSelected
                 adapter.notifyDataSetChanged()
             }
             android.R.id.home -> {
-                adapter.selectedAll = false
-                adapter.resetShowsSelected()
+                showViewModel.resetShowsSelected()
                 adapter.notifyDataSetChanged()
             }
         }
@@ -169,17 +193,17 @@ class ShowsFragment : Fragment() {
     // Check for selected items onResume
     override fun onResume() {
         super.onResume()
-        checkSelected(adapter.showsSelected.value)
+        checkSelected(showViewModel.showsSelected.value)
     }
 
     // Delete selected show items
     private fun deleteSelected () {
         val list: MutableList<ShowEntity> = ArrayList()
-        list.addAll(adapter.showsSelected.value!!)
+        list.addAll(showViewModel.showsSelected.value!!)
         showViewModel.deleteShows(list)
 
         // Clear the list of selected shows
-        adapter.resetShowsSelected()
+        showViewModel.resetShowsSelected()
 
         // Reset title and hide options menu
         setHasOptionsMenu(false)

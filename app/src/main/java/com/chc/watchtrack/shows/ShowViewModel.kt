@@ -1,7 +1,13 @@
 package com.chc.watchtrack.shows
 
 import android.app.Application
+import android.graphics.Color
+import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.chc.watchtrack.R
 import com.chc.watchtrack.database.ShowEntity
 import com.chc.watchtrack.database.ShowDatabaseDao
 import kotlinx.coroutines.*
@@ -21,6 +27,50 @@ class ShowViewModel (
 
     // Get list of shows as LiveData so can be observed and updated
     val shows = database.getAllShows()
+
+    // When changed, ShowsFragment will enable actions to do something with the selected shows
+    private var _showsSelected = MutableLiveData<MutableList<ShowEntity>?>()
+    var showsSelected: LiveData<MutableList<ShowEntity>?>
+        get() = _showsSelected
+        set(value) {
+            _showsSelected.value = value.value
+        }
+
+    // Clear _showsSelected list
+    fun resetShowsSelected() {
+        _showsSelected.value!!.clear()
+
+        // Update shows selected value
+        _showsSelected.value = _showsSelected.value
+    }
+
+    // Init showsSelected
+    fun initShowsSelected() {
+        _showsSelected.value = ArrayList()
+    }
+
+    /*
+    Add item to selected if not already selected, if already selected, remove it
+    Set background color of ViewHolder after selecting or deselecting
+     */
+    fun addOrRemoveSelected(selected: ShowListAdapter.ViewHolder) {
+        if (_showsSelected.value!!.contains(selected.binding.show))
+        {
+            _showsSelected.value?.remove(selected.binding.show!!)
+            selected.binding.cardView.setBackgroundColor(Color.WHITE)
+
+        }
+        else {
+            _showsSelected.value?.add(selected.binding.show!!)
+            selected.binding.cardView.setBackgroundColor(
+                ContextCompat.getColor(selected.binding.root.context,
+                    R.color.selectedItem
+                ))
+        }
+
+        // Update shows selected value
+        _showsSelected.value = _showsSelected.value
+    }
 
     // Add new show coroutine
     private suspend fun insert(showEntity: ShowEntity) {
