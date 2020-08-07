@@ -1,7 +1,12 @@
 package com.chc.watchtrack.movies
 
 import android.app.Application
+import android.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.chc.watchtrack.R
 import com.chc.watchtrack.database.MovieDatabaseDao
 import com.chc.watchtrack.database.MovieEntity
 import kotlinx.coroutines.*
@@ -21,6 +26,51 @@ class MovieViewModel (
 
     // Get list of movies as LiveData so can be observed and updated
     val movies = database.getAllMovies()
+
+    // When changed, MoviesFragment will enable actions to do something with the selected movies
+    private var _moviesSelected = MutableLiveData<MutableList<MovieEntity>?>()
+    var moviesSelected: LiveData<MutableList<MovieEntity>?>
+        get() = _moviesSelected
+        set(value) {
+            _moviesSelected.value = value.value
+        }
+
+    // Clear _moviesSelected list
+    fun resetMoviesSelected() {
+        _moviesSelected.value!!.clear()
+
+        // Update movies selected value
+        _moviesSelected.value = _moviesSelected.value
+    }
+
+    // Init moviesSelected
+    fun initMoviesSelected() {
+        _moviesSelected.value = ArrayList()
+    }
+
+    /*
+    Add item to selected if not already selected, if already selected, remove it
+    Set background color of ViewHolder after selecting or deselecting
+     */
+    fun addOrRemoveSelected(selected: MovieListAdapter.ViewHolder) {
+        if (_moviesSelected.value!!.contains(selected.binding.movie))
+        {
+            _moviesSelected.value?.remove(selected.binding.movie!!)
+            selected.binding.cardView.setBackgroundColor(Color.WHITE)
+
+        }
+        else {
+            _moviesSelected.value?.add(selected.binding.movie!!)
+            selected.binding.cardView.setBackgroundColor(
+                ContextCompat.getColor(selected.binding.root.context,
+                    R.color.selectedItem
+                ))
+        }
+
+        // Update moviesSelected value
+        _moviesSelected.value = _moviesSelected.value
+    }
+
 
     // Add new movie coroutine
     private suspend fun insert(movieEntity: MovieEntity) {

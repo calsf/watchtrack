@@ -19,9 +19,10 @@ import java.lang.NumberFormatException
 // ListAdapter will use MovieDiffCallback to determine what Movies have changed with ViewHolder
 class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(MovieDiffCallback())
 {
-    var selectedAll = false
+    lateinit var selectedItems: MutableList<MovieEntity?>
+    var selectedMode = false
 
-    // When changed, MovieFragment will display a success or fail toast depending on true or false
+    // When changed, MoviesFragment will display a success or fail toast depending on true or false
     private var _updateStatus = MutableLiveData<Boolean?>()
     val updateStatus: LiveData<Boolean?> get() = _updateStatus
     // Reset _updateStatus value after changing
@@ -37,16 +38,9 @@ class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(M
         _movieUpdate.value = null
     }
 
-    // When changed, MoviesFragment will enable actions to do something with the selected movies
-    private var _moviesSelected = MutableLiveData<MutableList<MovieEntity>?>()
-    val moviesSelected: LiveData<MutableList<MovieEntity>?> get() = _moviesSelected
-    // Clear _moviesSelected list
-    fun resetMoviesSelected() {
-        _moviesSelected.value!!.clear()
-
-        // Update movies selected value
-        _moviesSelected.value = _moviesSelected.value
-    }
+    // When changed, MoviesFragment will add or remove from selected
+    private var _selectedItem = MutableLiveData<ViewHolder?>()
+    val selectedItem: LiveData<ViewHolder?> get() = _selectedItem
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -54,15 +48,21 @@ class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(M
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        _moviesSelected.value = ArrayList()
         return ViewHolder.from(parent)
     }
 
     class ViewHolder private constructor
         (val binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MovieEntity, adapter: MovieListAdapter) {
-            // Reset background color if not selected
-            if (!adapter._moviesSelected.value!!.contains(item))
+            // Check if current item is selected and set view background accordingly
+            if (adapter.selectedItems.contains(item))
+            {
+                binding.cardView.setBackgroundColor(
+                    ContextCompat.getColor(binding.root.context,
+                        R.color.selectedItem
+                    ))
+            }
+            else
             {
                 binding.cardView.setBackgroundColor(Color.WHITE)
             }
@@ -83,46 +83,20 @@ class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(M
             // When click and held on cardView, select the item and add to list of selected
             binding.cardView.isClickable = true
             binding.cardView.setOnLongClickListener {
-                // Remove from list if already selected, else add to list
-                if (adapter._moviesSelected.value!!.contains(item))
-                {
-                    removeFromSelected(adapter._moviesSelected, item)
-                }
-                else
-                {
-                    // Hide expandable view if it is showing upon selecting
-                    if (binding.expandableView.visibility == View.VISIBLE)
-                    {
-                        hideExpandableView()
-                    }
-
-                    addToSelected(adapter._moviesSelected, item)
-                }
-
-                // Update moviesSelected value
-                adapter._moviesSelected.value = adapter._moviesSelected.value
+                adapter._selectedItem.value = this
 
                 true
             }
 
             /*
-            If selectedMovies list has at least 1 item, clicking on item will select/deselect item
+            If selectedMovies list has at least 1 item, then we are in select mode
+            In selectedMode, clicking on item will select/deselect item
             Else, clicking on item will show or hide expandable view to allow for quick edit
              */
             binding.cardView.setOnClickListener {
                 //
-                if (adapter._moviesSelected.value!!.size > 0) {
-                    if (adapter._moviesSelected.value!!.contains(item))
-                    {
-                        removeFromSelected(adapter._moviesSelected, item)
-                    }
-                    else
-                    {
-                        addToSelected(adapter._moviesSelected, item)
-                    }
-
-                    // Update moviesSelected value
-                    adapter._moviesSelected.value = adapter._moviesSelected.value
+                if (adapter.selectedMode) {
+                    adapter._selectedItem.value = this
                 }
                 else
                 {
@@ -157,28 +131,10 @@ class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(M
                 }
                 catch (nfe: NumberFormatException)
                 {
-                    // Update status to false to trigger fail toast in MoviesFragment
+                    // Update status to false to trigger fail toast in ShowsFragment
                     adapter._updateStatus.value = false
                     adapter.resetUpdateStatus()
                 }
-            }
-
-            // If all items are to be selected, check if this item is selected and add if not
-            if (adapter.selectedAll)
-            {
-                if (!adapter._moviesSelected.value!!.contains(item))
-                {
-                    // Hide expandable view if it is showing upon selecting
-                    if (binding.expandableView.visibility == View.VISIBLE)
-                    {
-                        hideExpandableView()
-                    }
-
-                    addToSelected(adapter._moviesSelected, item)
-                }
-
-                // Update movies selected value
-                adapter._moviesSelected.value = adapter._moviesSelected.value
             }
 
             // Execute any pending bindings
@@ -209,24 +165,6 @@ class MovieListAdapter : ListAdapter<MovieEntity, MovieListAdapter.ViewHolder>(M
                     binding.cardView
                 )
             }
-        }
-
-        // Remove item from selected movies and change background color
-        private fun removeFromSelected
-                    (moviesSelected: MutableLiveData<MutableList<MovieEntity>?>, item: MovieEntity)
-        {
-            moviesSelected.value!!.remove(item)
-            binding.cardView.setBackgroundColor(Color.WHITE)
-        }
-
-        // Add item to selected movies and change background color
-        private fun addToSelected(moviesSelected: MutableLiveData<MutableList<MovieEntity>?>,
-                                  item: MovieEntity) {
-            moviesSelected.value!!.add(item)
-            binding.cardView.setBackgroundColor(
-                ContextCompat.getColor(binding.root.context,
-                    R.color.selectedItem
-                ))
         }
 
         companion object {

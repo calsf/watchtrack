@@ -9,11 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.chc.watchtrack.DeletePopup
 import com.chc.watchtrack.R
 import com.chc.watchtrack.database.MovieEntity
-import com.chc.watchtrack.database.ShowEntity
 import com.chc.watchtrack.database.WatchDatabase
 import com.chc.watchtrack.databinding.MoviesFragmentBinding
 
@@ -25,9 +23,6 @@ class MoviesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Set action bar title
-        activity?.title = resources.getString(R.string.app_name)
-
         // Initialize toasts for successful and unsuccessful movie update
         failToast = Toast.makeText(activity, R.string.fail_to_update_movie, Toast.LENGTH_SHORT)
         successToast = Toast.makeText(activity, R.string.success_update_movie, Toast.LENGTH_LONG)
@@ -54,8 +49,18 @@ class MoviesFragment : Fragment() {
         adapter = MovieListAdapter()
         binding.moviesList.adapter = adapter
 
+        // Init adapter selectedItems
+        adapter.selectedItems = ArrayList()
+
+        // Init moviesSelected
+        movieViewModel.initMoviesSelected()
+
         // Check selected to set action bar title
-        checkSelected(adapter.moviesSelected.value)
+        checkSelected(movieViewModel.moviesSelected.value)
+
+        // Set adapter's selected items to reference view model moviesSelected
+        adapter.selectedItems =
+            movieViewModel.moviesSelected.value as MutableList<MovieEntity?>
 
         // ListAdapter detects changes in items and updates the movies in RecyclerView
         movieViewModel.movies.observe(viewLifecycleOwner, Observer {
@@ -94,12 +99,21 @@ class MoviesFragment : Fragment() {
             }
         })
 
+        // Add or remove selected item to selected in viewModel
+        adapter.selectedItem.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                movieViewModel.addOrRemoveSelected(it)
+            }
+        })
+
         /*
         If no movies are selected, hide options menu and change title to app name
         Else there are movies selected, show options menu and change title to amount selected
          */
-        adapter.moviesSelected.observe(viewLifecycleOwner, Observer {
-            checkSelected(it)
+        movieViewModel.moviesSelected.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                checkSelected(it)
+            }
         })
 
         // Set lifecycle owner to observe LiveData updates
@@ -119,6 +133,8 @@ class MoviesFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
 
             activity?.title = resources.getString(R.string.app_name)
+
+            adapter.selectedMode = false
         }
         else
         {
@@ -129,6 +145,8 @@ class MoviesFragment : Fragment() {
             setDisplayHomeAsUpEnabled(true)
 
             activity?.title = "${selected.size} Selected"
+
+            adapter.selectedMode = true
         }
     }
 
@@ -154,12 +172,16 @@ class MoviesFragment : Fragment() {
                 deletePopup.showDeletePopup(requireActivity()) { deleteSelected() }
             }
             R.id.select_all -> {
-                adapter.selectedAll = true
+                movieViewModel.movies.value?.forEach {
+                    if (!movieViewModel.moviesSelected.value!!.contains(it)) {
+                        movieViewModel.moviesSelected.value?.add(it)
+                    }
+                }
+                movieViewModel.moviesSelected = movieViewModel.moviesSelected
                 adapter.notifyDataSetChanged()
             }
             android.R.id.home -> {
-                adapter.selectedAll = false
-                adapter.resetMoviesSelected()
+                movieViewModel.resetMoviesSelected()
                 adapter.notifyDataSetChanged()
             }
         }
@@ -170,17 +192,17 @@ class MoviesFragment : Fragment() {
     // Check for selected items onResume
     override fun onResume() {
         super.onResume()
-        checkSelected(adapter.moviesSelected.value)
+        checkSelected(movieViewModel.moviesSelected.value)
     }
 
     // Delete selected movie items
     private fun deleteSelected () {
         val list: MutableList<MovieEntity> = ArrayList()
-        list.addAll(adapter.moviesSelected.value!!)
+        list.addAll(movieViewModel.moviesSelected.value!!)
         movieViewModel.deleteMovies(list)
 
-        // Clear the list of selected shows
-        adapter.resetMoviesSelected()
+        // Clear the list of selected movies
+        movieViewModel.resetMoviesSelected()
 
         // Reset title and hide options menu
         setHasOptionsMenu(false)

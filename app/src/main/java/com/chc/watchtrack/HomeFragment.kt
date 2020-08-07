@@ -1,7 +1,10 @@
 package com.chc.watchtrack
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -32,11 +35,18 @@ class HomeFragment : Fragment() {
         binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         binding.viewPager.adapter = viewPageAdapter
 
-        // TEMP - navigate to addMovieFragment
-        binding.addMovieButton.setOnClickListener{ Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addMovieFragment)}
+        // TEMP DISABLE - SCROLLS IF MOVED SLIGHTLY TO LEFT/RIGHT WHILE SCROLLING VERTICALLY
+        binding.viewPager.isUserInputEnabled = false
 
-        // TEMP - navigate to addShowFragment
-        binding.addShowButton.setOnClickListener{ Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addShowFragment)}
+        // Navigate to addMovieFragment
+        binding.addMovieButton.setOnClickListener{
+            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addMovieFragment)
+        }
+
+        // Navigate to addShowFragment
+        binding.addShowButton.setOnClickListener{
+            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addShowFragment)
+        }
 
         // Switch fragments using tab layout
         TabLayoutMediator(binding.tabBar, binding.viewPager) { tab, position ->
